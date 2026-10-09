@@ -2381,3 +2381,79 @@ body:not(.trancado) .veu{opacity:1;transition:opacity 1.4s ease .3s;}
   .brilho-borda,.folha > .sheen,.pagina.ativa .folha,.icone-ouro,.onda{ animation:none !important; }
   .titulo-linha{ width:min(190px,42%); opacity:1; }
 }
+/* =========================================================
+   标题「描金书写」：用 SVG 把标题再描一遍，笔画依次出现
+   ========================================================= */
+.titulo-svg{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  overflow:visible;
+  z-index:2;
+}
+.titulo-svg text{
+  fill:none;
+  stroke:url(#tinta-ouro);
+  stroke-width:1.15;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  paint-order:stroke;
+  vector-effect:non-scaling-stroke;
+}
+.titulo-svg.escrevendo text{
+  stroke-dasharray:1600;
+  stroke-dashoffset:1600;
+  animation:traco-escreve 2.3s cubic-bezier(.38,.02,.42,1) forwards,
+            traco-some 1.3s ease 3.2s forwards;
+}
+@keyframes traco-escreve{
+  from{ stroke-dashoffset:1600; opacity:1; }
+  to{ stroke-dashoffset:0; opacity:1; }
+}
+@keyframes traco-some{
+  from{ opacity:1; }
+  to{ opacity:.34; }
+}
+
+/* 描完之后留一点点微光，像刚写完还没干 */
+.titulo-svg text{
+  filter:drop-shadow(0 0 4px rgba(255,214,150,.55));
+}
+
+@media (prefers-reduced-motion:reduce){
+  .titulo-svg{ display:none; }
+}
+
+/* ---------- 金色光效贴图 ---------- */
+.luz-ouro{
+  position:absolute;
+  z-index:5;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
+  mix-blend-mode:screen;
+  opacity:.75;
+  animation:luz-pulsa 5.5s ease-in-out infinite;
+}
+@keyframes luz-pulsa{
+  0%,100%{ opacity:.5; transform:scale(1) rotate(var(--rot,0deg)); }
+  50%{ opacity:.95; transform:scale(1.08) rotate(var(--rot,0deg)); }
+}
+.luz-cena{
+  position:fixed;
+  z-index:3;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
+  mix-blend-mode:screen;
+  opacity:.55;
+  animation:luz-flutua 12s ease-in-out infinite;
+}
+@keyframes luz-flutua{
+  0%,100%{ opacity:.32; transform:translateY(0) scale(1); }
+  50%{ opacity:.72; transform:translateY(-14px) scale(1.06); }
+}
