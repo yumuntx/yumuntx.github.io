@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>生日快乐 · 关芷童</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='88'>💌</text></svg>">
+<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="luxo.css?v=18">
+</head>
+
+<body>
+
+<div class="portao" id="portao" role="dialog" aria-modal="true" aria-label="登录">
+    <div class="gw">
+      <header class="gw-topo">
+        <div class="gw-marca" aria-hidden="true"><i></i></div>
+        <div class="gw-nomes">
+          <strong>综合信息服务平台</strong>
+          <span>Integrated Information Service Platform</span>
+        </div>
+        <nav class="gw-nav" aria-label="导航">
+          <a href="#" onclick="return false">首页</a>
+          <a href="#" onclick="return false">通知公告</a>
+          <a href="#" onclick="return false">办事指南</a>
+          <a href="#" onclick="return false">帮助中心</a>
+        </nav>
+      </header>
+
+      <main class="gw-meio">
+        <div class="gw-caixa">
+          <div class="gw-abas">
+            <span class="ativo">账号登录</span>
+            <span>统一身份认证</span>
+          </div>
+          <form class="gw-form" id="portaoForm" autocomplete="off">
+            <div class="gw-linha">
+              <label for="portaoUser">用 户 名</label>
+              <input id="portaoUser" name="user" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="请输入用户名">
+            </div>
+            <div class="gw-linha">
+              <label for="portaoPass">密　　码</label>
+              <input id="portaoPass" name="pass" type="password" spellcheck="false" placeholder="请输入密码">
+            </div>
+            <div class="gw-linha">
+              <label for="portaoCode">验 证 码</label>
+              <input id="portaoCode" name="code" type="text" spellcheck="false" maxlength="4" placeholder="请输入验证码">
+              <span class="gw-code" id="gwCode" aria-hidden="true">8F3K</span>
+            </div>
+            <div class="gw-extra">
+              <label><input type="checkbox" checked> 记住用户名</label>
+              <a href="#" onclick="return false">忘记密码？</a>
+            </div>
+            <button class="gw-btn" type="submit">登 录</button>
+            <p class="gw-erro" id="portaoErro" role="alert"></p>
+          </form>
+        </div>
+        <aside class="gw-aviso">
+          <p class="gw-aviso-t">温馨提示</p>
+          <p>1. 本系统仅限授权用户访问，请妥善保管账号密码。</p>
+          <p>2. 请勿在公共设备上保存登录状态。</p>
+          <p>3. 如遇账号异常，请联系系统管理员。</p>
+        </aside>
+      </main>
+
+      <footer class="gw-pe">
+        <p>主办单位：综合服务平台运营中心　|　技术支持：信息技术服务有限公司</p>
+        <p>建议使用 Chrome、Edge 等现代浏览器访问　|　本站已通过信息安全等级保护测评</p>
+      </footer>
+    </div>
+  </div>
+
+  <div class="passagem" id="passagem" aria-hidden="true">
+    <div class="passagem-cartas" id="passagemCartas"></div>
+    <div class="passagem-carta" id="passagemCarta">
+      <div class="pc-luz"></div>
+      <div class="pc-corpo"></div>
+      <div class="pc-aba"></div>
+      <div class="pc-selo"></div>
+    </div>
+    <p class="passagem-txt" id="passagemTxt"></p>
+    <div class="passagem-barra"><i id="passagemBarra"></i></div>
+  </div>
+
+  
+<div class="container" id="container">
+
+  <!-- ============ 画布：极光 / 星尘 / 光斑 / 流光 ============ -->
+  <canvas class="fx-glow" id="fxGlow" aria-hidden="true"></canvas>
+  <canvas class="fx" id="fx" aria-hidden="true"></canvas>
+  <div class="veu" aria-hidden="true"></div>
+  <div class="cena-flash" id="cenaFlash" aria-hidden="true"></div>
+  <div class="letra-fundo" id="letraFundo" aria-hidden="true"></div>
+
+  <!-- ============ 顶部金旗 ============ -->
+  <div class="image" aria-hidden="true">
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="fio" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(255,240,200,0)"/>
+          <stop offset="18%" stop-color="rgba(255,240,200,.95)"/>
+          <stop offset="82%" stop-color="rgba(255,240,200,.95)"/>
+          <stop offset="100%" stop-color="rgba(255,240,200,0)"/>
+        </linearGradient>
+        <linearGradient id="pen1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe9b8"/><stop offset="100%" stop-color="#d9a94a"/></linearGradient>
+        <linearGradient id="pen2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffc7dd"/><stop offset="100%" stop-color="#d6557f"/></linearGradient>
+        <linearGradient id="pen3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bfe9de"/><stop offset="100%" stop-color="#4f9d8b"/></linearGradient>
+        <linearGradient id="pen4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cfd8ff"/><stop offset="100%" stop-color="#6f7fd1"/></linearGradient>
+        <linearGradient id="pen5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e2ccff"/><stop offset="100%" stop-color="#8a5fd1"/></linearGradient>
+      </defs>
+      <path d="M0 40 Q600 168 1200 40" fill="none" stroke="url(#fio)" stroke-width="2.2" stroke-linecap="round"/>
+      <g class="flags">
+        <polygon points="30,52.4 90,52.4 60,112.4" fill="url(#pen1)"/>
+        <polygon points="150,73.2 210,73.2 180,133.2" fill="url(#pen2)"/>
+        <polygon points="270,88.8 330,88.8 300,148.8" fill="url(#pen3)"/>
+        <polygon points="390,99.2 450,99.2 420,159.2" fill="url(#pen4)"/>
+        <polygon points="510,104.4 570,104.4 540,164.4" fill="url(#pen5)"/>
+        <polygon points="630,104.4 690,104.4 660,164.4" fill="url(#pen1)"/>
+        <polygon points="750,99.2 810,99.2 780,159.2" fill="url(#pen2)"/>
+        <polygon points="870,88.8 930,88.8 900,148.8" fill="url(#pen3)"/>
+        <polygon points="990,73.2 1050,73.2 1020,133.2" fill="url(#pen4)"/>
+        <polygon points="1110,52.4 1170,52.4 1140,112.4" fill="url(#pen5)"/>
+      </g>
+      <g fill="#fff8e8">
+        <circle cx="60" cy="52.4" r="3.4"/><circle cx="180" cy="73.2" r="3.4"/>
+        <circle cx="300" cy="88.8" r="3.4"/><circle cx="420" cy="99.2" r="3.4"/>
+        <circle cx="540" cy="104.4" r="3.4"/><circle cx="660" cy="104.4" r="3.4"/>
+        <circle cx="780" cy="99.2" r="3.4"/><circle cx="900" cy="88.8" r="3.4"/>
+        <circle cx="1020" cy="73.2" r="3.4"/><circle cx="1140" cy="52.4" r="3.4"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- ============ 主角：中间的贺卡 ============ -->
+  <main class="palco">
+
+    <h1 class="titulo-cena">Happy Birthday</h1>
+
+    <div class="carta" id="carta">
+
+      <!-- 信封 -->
+      <button class="sobre" id="sobre" type="button" aria-label="轻触开启贺卡，并播放背景音乐">
+        <span class="sobre-aba" aria-hidden="true"></span>
+        <span class="sobre-fita" aria-hidden="true"></span>
+        <span class="sobre-selo" aria-hidden="true">童</span>
+        <span class="sobre-nome">关芷童　亲启</span>
+        <span class="sobre-dica">轻触开启 · 一封信 · 一首歌</span>
+      </button>
+
+      <!-- 七页 -->
+      <section class="livro" id="livro" aria-label="给关芷童的生日贺卡" aria-hidden="true">
+        <div class="paginas" id="paginas">
+
+          <!-- 1 · 封面 -->
+          <article class="pagina ativa" aria-label="第 1 页，封面">
+            <div class="folha dividida">
+              <div class="col-esq">
+                <div class="userImg">
+                  <img class="retrato-px" src="assets/avatar-px.png" alt="头像" width="120" height="120">
+                </div>
+                <h2 class="capa-nome">关芷童</h2>
+                <svg class="folhinha" viewBox="0 0 120 34" fill="none" aria-hidden="true"><path d="M60 4v24" stroke="currentColor" stroke-width="1" opacity=".5"/><path d="M60 12c-8-2-14-7-15-14 8 1 14 6 15 14z" fill="currentColor" opacity=".45"/><path d="M60 12c8-2 14-7 15-14-8 1-14 6-15 14z" fill="currentColor" opacity=".45"/><path d="M60 24c-6-1-10-5-11-10 6 1 10 4 11 10z" fill="currentColor" opacity=".3"/><path d="M60 24c6-1 10-5 11-10-6 1-10 4-11 10z" fill="currentColor" opacity=".3"/></svg>
+              </div>
+              <div class="col-dir">
+                <p class="capa-sub">生 日 快 乐</p>
+                <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 200 20" fill="none"><path d="M4 10h56M140 10h56" stroke="currentColor" stroke-width="1" opacity=".45"/><path d="M60 10c6-5.5 13-5.5 19 0-6 5.5-13 5.5-19 0z" fill="currentColor" opacity=".38"/><path d="M140 10c-6-5.5-13-5.5-19 0 6 5.5 13 5.5 19 0z" fill="currentColor" opacity=".38"/><path d="M100 3c3.4 3 5.5 5.2 5.5 7s-2.1 4-5.5 7c-3.4-3-5.5-5.2-5.5-7s2.1-4 5.5-7z" fill="currentColor" opacity=".9"/><circle cx="100" cy="10" r="1.4" fill="#fff" opacity=".9"/><circle cx="88" cy="10" r="1.3" fill="currentColor" opacity=".55"/><circle cx="112" cy="10" r="1.3" fill="currentColor" opacity=".55"/></svg></div>
+                <p class="capa-verso">
+                  愿你每天都被好好爱着<br>
+                  愿你想要的，慢慢都来<br>
+                  愿你想去的地方都能到达<br>
+                  愿你想见的人都会重逢
+                </p>
+                <p class="dica-virar">向右翻 → · 点点看有惊喜</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2 · 一整页一句话 -->
+          <article class="pagina" aria-label="第 2 页，一句话">
+            <div class="folha solta">
+              <p class="capa-sub">写 给 你</p>
+              <p class="cartaz">愿你每天<br>都被好好爱着</p>
+              <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 200 20" fill="none"><path d="M4 10h56M140 10h56" stroke="currentColor" stroke-width="1" opacity=".45"/><path d="M60 10c6-5.5 13-5.5 19 0-6 5.5-13 5.5-19 0z" fill="currentColor" opacity=".38"/><path d="M140 10c-6-5.5-13-5.5-19 0 6 5.5 13 5.5 19 0z" fill="currentColor" opacity=".38"/><path d="M100 3c3.4 3 5.5 5.2 5.5 7s-2.1 4-5.5 7c-3.4-3-5.5-5.2-5.5-7s2.1-4 5.5-7z" fill="currentColor" opacity=".9"/><circle cx="100" cy="10" r="1.4" fill="#fff" opacity=".9"/><circle cx="88" cy="10" r="1.3" fill="currentColor" opacity=".55"/><circle cx="112" cy="10" r="1.3" fill="currentColor" opacity=".55"/></svg></div>
+              <p class="cartaz-sub">被温柔以待 · 被认真对待 · 被好好记得</p>
+            </div>
+          </article>
+
+          <!-- 3 · 长信 -->
+          <article class="pagina" aria-label="第 3 页，写给你的话">
+            <div class="folha dividida carta">
+              <div class="col-esq">
+                <div class="selo-char" aria-hidden="true"><span>福</span></div>
+                <p class="etiqueta">生日这天</p>
+              </div>
+              <div class="col-dir">
+                <h3 class="titulo">写给你的话</h3>
+                <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 200 20" fill="none"><path d="M4 10h56M140 10h56" stroke="currentColor" stroke-width="1" opacity=".45"/><path d="M60 10c6-5.5 13-5.5 19 0-6 5.5-13 5.5-19 0z" fill="currentColor" opacity=".38"/><path d="M140 10c-6-5.5-13-5.5-19 0 6 5.5 13 5.5 19 0z" fill="currentColor" opacity=".38"/><path d="M100 3c3.4 3 5.5 5.2 5.5 7s-2.1 4-5.5 7c-3.4-3-5.5-5.2-5.5-7s2.1-4 5.5-7z" fill="currentColor" opacity=".9"/><circle cx="100" cy="10" r="1.4" fill="#fff" opacity=".9"/><circle cx="88" cy="10" r="1.3" fill="currentColor" opacity=".55"/><circle cx="112" cy="10" r="1.3" fill="currentColor" opacity=".55"/></svg></div>
+                <p class="texto carta-txt">
+                  亲爱的芷童：<br><br>
+                  今天是你的生日，愿这一天被温柔以待——愿清晨的光刚好落在你脸上，愿蛋糕上的蜡烛一次就吹灭、许下的愿都算数；愿拆开祝福的时候，你会发现原来有这么多人记挂着你。<br><br>
+                  这一年你辛苦了。那些悄悄扛下来的、没说完的、一个人走夜路的时刻，都过去了。从今天起，愿好事一件接着一件，来找你。
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4 · 四个小愿望 -->
+          <article class="pagina" aria-label="第 4 页，四个小愿望">
+            <div class="folha dividida">
+              <div class="col-esq">
+                <div class="selo-char" aria-hidden="true"><span>愿</span></div>
+                <p class="etiqueta">新的一岁</p>
+              </div>
+              <div class="col-dir">
+                <h3 class="titulo">四个小愿望</h3>
+                <ul class="desejos grade" id="desejos">
+                  <li class="desejo" tabindex="0" role="button" aria-pressed="false">
+                    <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 5C10.7 5 5 9.7 5 19c9.3 0 14-5.7 14-14z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 19c3.5-4.6 7-7.6 12-10.4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
+                    <span class="d-txt"><b>平安</b><i>夜里有好梦，白天有力气</i></span>
+                    <span class="acende" aria-hidden="true">✦</span>
+                  </li>
+                  <li class="desejo" tabindex="0" role="button" aria-pressed="false">
+                    <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.3L19 10l-5.1 1.7L12 17l-1.9-5.3L5 10l5.1-1.7z" fill="currentColor" opacity=".85"/></svg></span>
+                    <span class="d-txt"><b>顺遂</b><i>想做的事，慢慢都能成</i></span>
+                    <span class="acende" aria-hidden="true">✦</span>
+                  </li>
+                  <li class="desejo" tabindex="0" role="button" aria-pressed="false">
+                    <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20C7 16.4 3.6 13.5 3.6 10.2 3.6 7.9 5.5 6 7.8 6c1.5 0 2.9.8 4.2 2.3C13.3 6.8 14.7 6 16.2 6c2.3 0 4.2 1.9 4.2 4.2 0 3.3-3.4 6.2-8.4 9.8z" fill="currentColor" opacity=".9"/></svg></span>
+                    <span class="d-txt"><b>被爱</b><i>身边一直有暖着你的人</i></span>
+                    <span class="acende" aria-hidden="true">✦</span>
+                  </li>
+                  <li class="desejo" tabindex="0" role="button" aria-pressed="false">
+                    <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4c4.4 0 8 3.6 8 8 0 3.2-2 5.4-4.6 6.6L16 21H8l.6-2.4C6 17.4 4 15.2 4 12c0-4.4 3.6-8 8-8z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v5M9.5 10.5L12 13l2.5-2.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+                    <span class="d-txt"><b>自在</b><i>不必讨好谁，也不必赶时间</i></span>
+                    <span class="acende" aria-hidden="true">✦</span>
+                  </li>
+                </ul>
+                <p class="dica-acende">点一点，把愿望点亮</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5 · 时间线 -->
+          <article class="pagina" aria-label="第 5 页，给一年后的你">
+            <div class="folha dividida">
+              <div class="col-esq">
+                <div class="selo-char" aria-hidden="true"><span>年</span></div>
+                <p class="etiqueta">一年之后</p>
+              </div>
+              <div class="col-dir">
+                <h3 class="titulo">给一年后的你</h3>
+                <ul class="linha-tempo" id="linhaTempo">
+                  <li class="tempo" tabindex="0" role="button" aria-pressed="false"><span class="ponto-tempo" aria-hidden="true"></span><p>愿你还在做喜欢的事</p></li>
+                  <li class="tempo" tabindex="0" role="button" aria-pressed="false"><span class="ponto-tempo" aria-hidden="true"></span><p>愿你去过至少一个没去过的地方</p></li>
+                  <li class="tempo" tabindex="0" role="button" aria-pressed="false"><span class="ponto-tempo" aria-hidden="true"></span><p>愿你身边有随时能说说话的人</p></li>
+                  <li class="tempo" tabindex="0" role="button" aria-pressed="false"><span class="ponto-tempo" aria-hidden="true"></span><p>愿你回头看这一年，觉得值得</p></li>
+                </ul>
+                <p class="dica-acende">点一下，把这一年记下来</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6 · 竖排小诗 -->
+          <article class="pagina" aria-label="第 6 页，一首小诗">
+            <div class="folha solta">
+              <div class="poema" role="img" aria-label="愿你常欢喜，愿你多顺意，愿你有人疼，愿你无忧虑">
+                <p>愿你常欢喜</p>
+                <p>愿你多顺意</p>
+                <p>愿你有人疼</p>
+                <p>愿你无忧虑</p>
+                <span class="sinete" aria-hidden="true">童</span>
+              </div>
+              <p class="poema-data">二〇二六 · 生日</p>
+            </div>
+          </article>
+
+          <!-- 7 · 落款 -->
+          <article class="pagina" aria-label="第 7 页，落款">
+            <div class="folha solta">
+              <div class="coracao-wrap">
+                <button class="coracao" id="coracao" type="button" aria-label="点一下撒彩纸和心心">
+                  <svg viewBox="0 0 120 112" aria-hidden="true">
+                    <defs><linearGradient id="heart-grad" x1="0" y1="0" x2="0.5" y2="1">
+                      <stop offset="0%" stop-color="#ffb3cd"/><stop offset="55%" stop-color="#e8547f"/><stop offset="100%" stop-color="#a81f4c"/>
+                    </linearGradient></defs>
+                    <path d="M60 100C32 80 12 63 12 42 12 25 25 13 41 13c8 0 15 4 19 10 4-6 11-10 19-10 16 0 29 12 29 29 0 21-20 38-48 58z" fill="url(#heart-grad)"/>
+                    <path d="M34 32c-6 4-9 11-9 18" fill="none" stroke="#fff" stroke-opacity=".65" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M104 18l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#ffd479"/>
+                  </svg>
+                </button>
+              </div>
+              <p class="final">生日快乐，慢慢长大也没关系</p>
+              <p class="final-sub">不必成为谁眼里的样子，你本来的样子就很好。</p>
+              <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 200 20" fill="none"><path d="M4 10h56M140 10h56" stroke="currentColor" stroke-width="1" opacity=".45"/><path d="M60 10c6-5.5 13-5.5 19 0-6 5.5-13 5.5-19 0z" fill="currentColor" opacity=".38"/><path d="M140 10c-6-5.5-13-5.5-19 0 6 5.5 13 5.5 19 0z" fill="currentColor" opacity=".38"/><path d="M100 3c3.4 3 5.5 5.2 5.5 7s-2.1 4-5.5 7c-3.4-3-5.5-5.2-5.5-7s2.1-4 5.5-7z" fill="currentColor" opacity=".9"/><circle cx="100" cy="10" r="1.4" fill="#fff" opacity=".9"/><circle cx="88" cy="10" r="1.3" fill="currentColor" opacity=".55"/><circle cx="112" cy="10" r="1.3" fill="currentColor" opacity=".55"/></svg></div>
+              <p class="assinatura-label">from</p>
+              <p class="assinatura">yumu</p>
+              <p class="ps">背景这首《慢慢都来》——愿你想要的，慢慢都来。</p>
+            </div>
+          </article>
+
+          <!-- 8 · 岁岁：年龄切换 -->
+          <article class="pagina" aria-label="第 8 页，岁岁">
+            <div class="folha solta idade">
+              <p class="idade-etiqueta">岁 岁</p>
+              <div class="idade-palco">
+                <span class="idade-num" id="idadeNum" role="button" tabindex="0" title="点一下回到今天">22</span>
+                <span class="idade-sufixo">岁</span>
+              </div>
+              <p class="idade-data" id="idadeData">2026.10.10</p>
+              <p class="idade-frase" id="idadeFrase">今天，生日快乐</p>
+              <div class="idade-barra">
+                <input class="idade-slider" id="idadeSlider" type="range" min="2004" max="2026" step="1" value="2026" aria-label="拖动看每一岁" aria-valuetext="2026 年，22 岁">
+                <div class="idade-marcas" aria-hidden="true">
+                  <span>2004</span><span>2010</span><span>2016</span><span>2022</span><span>2026</span>
+                </div>
+              </div>
+              <p class="idade-dica">拖动金线，一岁一岁长起来</p>
+            </div>
+          </article>
+          <!-- 9 · 数字里的你 -->
+          <article class="pagina" aria-label="第 9 页，数字里的你">
+            <div class="folha solta numeros">
+              <h3 class="titulo">数字里的你</h3>
+              <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 88 14"><path d="M2 7h26M60 7h26" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M33 7l4-4.4L41 7l-4 4.4z" fill="currentColor" opacity=".85"/><path d="M47 7l4-4.4L55 7l-4 4.4z" fill="currentColor" opacity=".85"/></svg></div>
+              <div class="numeros-grade"></div>
+              <p class="dica-linha">点一下卡片，数字会再数一遍</p>
+            </div>
+          </article>
+
+          <!-- 10 · 抽一支签 -->
+          <article class="pagina" aria-label="第 10 页，抽一支签">
+            <div class="folha solta qian">
+              <h3 class="titulo">抽 一 支 签</h3>
+              <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 88 14"><path d="M2 7h26M60 7h26" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M33 7l4-4.4L41 7l-4 4.4z" fill="currentColor" opacity=".85"/><path d="M47 7l4-4.4L55 7l-4 4.4z" fill="currentColor" opacity=".85"/></svg></div>
+              <div class="qian-palco">
+                <p class="qian-texto">点下面这支签，抽一句今年的运气</p>
+              </div>
+              <p class="qian-conta">已经抽了 0 支</p>
+              <button class="qian-btn" type="button">抽 一 支</button>
+            </div>
+          </article>
+
+          <!-- 11 · 十二个月 -->
+          <article class="pagina" aria-label="第 11 页，十二个月">
+            <div class="folha solta meses">
+              <h3 class="titulo">一年的十二句</h3>
+              <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 88 14"><path d="M2 7h26M60 7h26" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M33 7l4-4.4L41 7l-4 4.4z" fill="currentColor" opacity=".85"/><path d="M47 7l4-4.4L55 7l-4 4.4z" fill="currentColor" opacity=".85"/></svg></div>
+              <div class="meses-grade"></div>
+              <div class="acao-linha"><button class="acao-btn" id="mesTudo" type="button">全 部 点 亮</button></div>
+              <p class="mes-ano">点一下月份，看看那句话</p>
+            </div>
+          </article>
+
+          <!-- 12 · 时间胶囊 -->
+          <article class="pagina" aria-label="第 12 页，时间胶囊">
+            <div class="folha solta capsulas">
+              <h3 class="titulo">写给以后的几个信封</h3>
+              <div class="ornamento" aria-hidden="true"><svg viewBox="0 0 88 14"><path d="M2 7h26M60 7h26" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M33 7l4-4.4L41 7l-4 4.4z" fill="currentColor" opacity=".85"/><path d="M47 7l4-4.4L55 7l-4 4.4z" fill="currentColor" opacity=".85"/></svg></div>
+              <div class="capsulas-grade"></div>
+              <p class="dica-linha">点开一个，就是拆一封</p>
+              <div class="acao-linha"><button class="acao-btn" id="capTudo" type="button">全 部 拆 开</button></div>
+            </div>
+          </article>
+        </div>
+
+        <button class="nav-seta nav-prev desativado" id="navPrev" type="button" aria-label="上一页">‹</button>
+        <button class="nav-seta nav-next" id="navNext" type="button" aria-label="下一页">›</button>
+
+        <div class="pontos" id="pontos" aria-label="翻页">
+          <button class="ponto ativo" type="button" data-p="0" aria-label="第 1 页"></button>
+          <button class="ponto" type="button" data-p="1" aria-label="第 2 页"></button>
+          <button class="ponto" type="button" data-p="2" aria-label="第 3 页"></button>
+          <button class="ponto" type="button" data-p="3" aria-label="第 4 页"></button>
+          <button class="ponto" type="button" data-p="4" aria-label="第 5 页"></button>
+          <button class="ponto" type="button" data-p="5" aria-label="第 6 页"></button>
+          <button class="ponto" type="button" data-p="6" aria-label="第 7 页"></button>
+          <button class="ponto" type="button" data-p="7" aria-label="第 8 页"></button>
+          <button class="ponto" type="button" data-p="8" aria-label="第 9 页"></button>
+          <button class="ponto" type="button" data-p="9" aria-label="第 10 页"></button>
+          <button class="ponto" type="button" data-p="10" aria-label="第 11 页"></button>
+          <button class="ponto" type="button" data-p="11" aria-label="第 12 页"></button>
+        </div>
+      </section>
+
+    </div><!-- /carta -->
+
+    <!-- 蜡烛：点一下吹灭 -->
+    <button class="vela" id="vela" type="button" aria-label="吹蜡烛">
+      <svg viewBox="10 6 40 148" aria-hidden="true">
+        <defs>
+          <linearGradient id="cera" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#fff6e4"/><stop offset="42%" stop-color="#ffe9c6"/><stop offset="100%" stop-color="#e8cfa4"/>
+          </linearGradient>
+          <radialGradient id="chama" cx="50%" cy="65%" r="60%">
+            <stop offset="0%" stop-color="#fffdf2"/><stop offset="42%" stop-color="#ffd98a"/><stop offset="100%" stop-color="#ff9a3c" stop-opacity=".15"/>
+          </radialGradient>
+        </defs>
+        <ellipse class="halo" cx="30" cy="34" rx="26" ry="30" fill="url(#chama)" opacity=".55"/>
+        <rect x="24" y="52" width="12" height="86" rx="5" fill="url(#cera)"/>
+        <path d="M24 60c4 2 8 2 12 0M24 74c4 2 8 2 12 0M24 88c4 2 8 2 12 0" stroke="#e0c79b" stroke-width="1.2" fill="none" opacity=".7"/>
+        <line x1="30" y1="44" x2="30" y2="54" stroke="#6b4a3a" stroke-width="2.4" stroke-linecap="round"/>
+        <g class="flame">
+          <path d="M30 16c5 8 8 12 8 17a8 8 0 0 1-16 0c0-5 3-9 8-17z" fill="#ffd06a"/>
+          <path d="M30 24c2.6 4.4 4.2 6.6 4.2 9.4a4.2 4.2 0 0 1-8.4 0c0-2.8 1.6-5 4.2-9.4z" fill="#fff6d0"/>
+        </g>
+        <ellipse cx="30" cy="146" rx="17" ry="6" fill="#2a1030" opacity=".35"/>
+        <path d="M13 142h34" stroke="#d9a94a" stroke-width="1.6" opacity=".7"/>
+      </svg>
+    </button>
+
+    <div class="letra" id="letra">
+      <p class="letra-linha" id="letraLinha"></p>
+    </div>
+
+    <div class="guia" id="guia" aria-hidden="true"><i id="guiaBarra"></i></div>
+
+  </main>
+
+  <!-- ============ 音乐 ============ -->
+  <div class="musica">
+    <button class="musica-btn" id="musicaBtn" type="button" aria-pressed="false">
+      <span class="equalizador" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="musica-txt" id="musicaTxt">播放背景音乐</span>
+    </button>
+    <span class="musica-nome">慢慢都来 · 送给芷童</span>
+  </div>
+
+  <!-- 尾声 -->
+  <section class="finale" id="finale" aria-hidden="true">
+    <p class="finale-sub">生 日 快 乐</p>
+    <p class="finale-nome">关芷童</p>
+    <p class="finale-linha">慢慢长大也没关系</p>
+    <button class="finale-btn" id="finaleBtn" type="button">再看一遍</button>
+  </section>
+
+  <!-- 自动导览开关 -->
+  <button class="guia-btn" id="guiaBtn" type="button" aria-pressed="true">
+    <span class="guia-ponto" aria-hidden="true"></span>
+    <span id="guiaTxt">自动导览 开</span>
+  </button>
+
+  <audio id="bgm" src="song.mp3" loop preload="auto"></audio>
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+</div>
+
+<script src="portao.js?v=18"></script>
+  <script src="lyrics.js?v=18"></script>
+<script src="fx.js?v=18"></script>
+<script src="script.js?v=18"></script>
+<script src="interacoes.js?v=18"></script>
+<script src="idade.js?v=18"></script>
+<script src="extras.js?v=18"></script>
+  <script src="brincadeiras.js?v=18"></script>
+  <script src="ajuste.js?v=18"></script>
+  <script src="botanica.js?v=18"></script>
+</body>
+</html>

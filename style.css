@@ -1,0 +1,1690 @@
+/* =========================================================
+   生日快乐 · 关芷童
+   主角：中间那本小册子（信封 → 4 页信纸，可翻页）
+   背景：歌 + 歌词
+   ========================================================= */
+
+:root{
+  --sky-1:#241640;
+  --sky-2:#4b2a63;
+  --sky-3:#9c4a76;
+  --sky-4:#e2738f;
+  --sky-5:#ffc7a8;
+  --gold:#ffd479;
+  --gold-deep:#b07c30;
+  --rose:#ff8fb8;
+  --rose-deep:#c2405f;
+  --cream:#fff7ea;
+  --ink:#3a2340;
+  --ink-soft:#7a5a72;
+  --linha-ouro:rgba(178,132,64,.42);
+
+  --font-cn:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  --font-display:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+  --font-hand:"Segoe Script","Bradley Hand","STXingkai","KaiTi",cursive;
+  --font-serif:"Songti SC","STSong","SimSun",Georgia,serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  margin:0;
+  min-height:100vh;
+  min-height:100svh;
+  font-family:var(--font-cn);
+  color:var(--cream);
+  background:linear-gradient(180deg,
+    var(--sky-1) 0%, var(--sky-2) 26%, var(--sky-3) 52%,
+    var(--sky-4) 74%, var(--sky-5) 100%);
+  background-attachment:fixed;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+.container{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* 星星 + 地平线暖光 */
+.container::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(1.7px 1.7px at 8% 12%,#fff,transparent),
+    radial-gradient(1.4px 1.4px at 22% 26%,#fff,transparent),
+    radial-gradient(1.9px 1.9px at 35% 8%,#fff,transparent),
+    radial-gradient(1.3px 1.3px at 48% 20%,#fff,transparent),
+    radial-gradient(1.6px 1.6px at 62% 10%,#fff,transparent),
+    radial-gradient(1.3px 1.3px at 76% 24%,#fff,transparent),
+    radial-gradient(1.8px 1.8px at 90% 14%,#fff,transparent),
+    radial-gradient(1.2px 1.2px at 15% 44%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 30% 38%,#fff,transparent),
+    radial-gradient(1.2px 1.2px at 68% 42%,#fff,transparent),
+    radial-gradient(1.6px 1.6px at 84% 38%,#fff,transparent),
+    radial-gradient(1.3px 1.3px at 54% 32%,#fff,transparent);
+  opacity:.8;
+  animation:twinkle 5s ease-in-out infinite alternate;
+}
+.container::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-18%;
+  width:min(1500px,160%);
+  height:60%;
+  transform:translateX(-50%);
+  pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,205,170,.5),transparent 72%);
+}
+
+/* ---------------- 背景装饰 ---------------- */
+.image{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height:min(17vh,150px);
+  display:flex;
+  justify-content:center;
+  z-index:1;
+  pointer-events:none;
+  opacity:.9;
+}
+.image svg{display:block;height:100%;width:auto;max-width:100%;}
+.flags{transform-origin:600px 40px;animation:sway 6s ease-in-out infinite alternate;}
+
+.box-balloon{position:absolute;inset:0;pointer-events:none;z-index:1;}
+.balloon-item1{position:absolute;opacity:.92;}
+.balloon-item1:nth-child(1){left:4%;top:17%;width:min(96px,9vw);animation:float 5.6s ease-in-out infinite alternate;}
+.balloon-item1:nth-child(2){right:5%;top:25%;width:min(80px,7.5vw);animation:float 7.2s ease-in-out infinite alternate-reverse;}
+.balloon-item1 svg{display:block;width:100%;height:auto;}
+
+.box-cloud{position:absolute;inset:0;pointer-events:none;z-index:1;}
+.cloud{position:absolute;left:1%;bottom:2%;width:min(250px,27vw);animation:drift 12s ease-in-out infinite alternate;}
+.cloud svg{display:block;width:100%;height:auto;}
+.container .cloud:first-child::before{
+  content:'芷童';
+  position:absolute;
+  left:52%;
+  top:-28px;
+  transform:translateX(-50%) rotate(-4deg);
+  width:100%;
+  text-align:center;
+  font-family:var(--font-hand);
+  font-weight:600;
+  font-size:clamp(13px,1.4vw,17px);
+  color:var(--ink);
+  text-shadow:0 1px 0 rgba(255,255,255,.95),0 3px 10px rgba(58,16,64,.35);
+  z-index:5;
+}
+
+/* 小蛋糕 */
+.cake{
+  appearance:none;
+  position:absolute;
+  left:50%;
+  bottom:clamp(2px,1vh,10px);
+  transform:translateX(-50%);
+  width:min(104px,12vw);
+  padding:0;
+  border:0;
+  background:none;
+  cursor:pointer;
+  z-index:2;
+  filter:drop-shadow(0 8px 16px rgba(36,10,44,.4));
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.cake svg{display:block;width:100%;height:auto;}
+.cake:hover{transform:translateX(-50%) translateY(-6px) scale(1.05);}
+.cake:focus-visible{outline:3px solid var(--gold);outline-offset:6px;}
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flicker 1s ease-in-out infinite alternate;}
+
+/* ---------------- 舞台 ---------------- */
+.palco{
+  position:relative;
+  z-index:3;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:clamp(10px,1.8vh,20px);
+  padding:clamp(74px,10.5vh,112px) 18px clamp(62px,8.6vh,92px);
+}
+
+.text-happybirthday{width:min(420px,46vw,26vh);}
+.text-happybirthday svg{display:block;width:100%;height:auto;}
+.word-line{
+  font-family:var(--font-display);
+  font-weight:800;
+  fill:url(#grad-word);
+  paint-order:stroke;
+  stroke:#4a1f45;
+  stroke-width:2.5;
+  stroke-linejoin:round;
+}
+.word-1{font-size:104px;letter-spacing:12px;}
+.word-2{font-size:96px;letter-spacing:6px;}
+.word-stars{transform-origin:450px 110px;animation:twinkle 2.6s ease-in-out infinite alternate;}
+
+/* ================= 中间的贺卡 ================= */
+.carta{
+  position:relative;
+  width:min(900px,94vw);
+  display:grid;
+  place-items:center;
+  perspective:1500px;
+}
+
+/* ---- 火漆信封 ---- */
+.sobre{
+  grid-area:1/1;
+  position:relative;
+  width:min(460px,86vw);
+  aspect-ratio:8/5;
+  padding:0;
+  border:0;
+  border-radius:12px;
+  cursor:pointer;
+  background:linear-gradient(160deg,#fffaf2,#ffe6cd);
+  box-shadow:0 26px 54px rgba(20,6,30,.5);
+  transform-style:preserve-3d;
+  animation:respira 3.4s ease-in-out infinite;
+  transition:opacity .5s ease,transform .7s cubic-bezier(.22,1,.36,1);
+  overflow:hidden;
+}
+.sobre-aba{
+  position:absolute;
+  left:0; top:0;
+  width:100%;
+  height:62%;
+  z-index:1;
+  background:linear-gradient(180deg,#fff0dd,#f6d6b6);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  box-shadow:0 2px 6px rgba(150,100,80,.12);
+}
+.sobre::after{                     /* 烫金细框 */
+  content:"";
+  position:absolute;
+  inset:9px;
+  z-index:2;
+  border:1px solid var(--linha-ouro);
+  border-radius:7px;
+  pointer-events:none;
+}
+.sobre::before{                    /* 扫过一道光 */
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  border-radius:12px;
+  background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 50%,transparent 62%);
+  background-size:260% 100%;
+  pointer-events:none;
+  animation:brilho 5s ease-in-out infinite;
+}
+.sobre-selo{
+  position:absolute;
+  left:50%;
+  top:57%;
+  z-index:3;
+  transform:translate(-50%,-50%);
+  width:clamp(50px,6.6vw,66px);
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border-radius:52% 48% 47% 53% / 50% 52% 48% 50%;
+  font-family:var(--font-hand);
+  font-size:clamp(20px,2.6vw,26px);
+  line-height:1;
+  color:#fff1f5;
+  background:
+    radial-gradient(circle at 34% 28%,rgba(255,255,255,.5),transparent 45%),
+    radial-gradient(circle at 50% 55%,#ff8fb8,#c22b58 70%,#8e1a3f);
+  box-shadow:0 6px 18px rgba(150,20,60,.45),0 0 0 3px rgba(255,255,255,.28) inset;
+}
+.sobre-nome{
+  position:absolute;
+  left:0; right:0;
+  bottom:17%;
+  z-index:3;
+  text-align:center;
+  font-family:var(--font-hand);
+  font-size:clamp(15px,1.7vw,20px);
+  letter-spacing:.08em;
+  color:#8a5a72;
+}
+.sobre-dica{
+  position:absolute;
+  left:0; right:0;
+  bottom:7%;
+  z-index:3;
+  text-align:center;
+  font-size:clamp(11px,1.1vw,12.5px);
+  letter-spacing:.2em;
+  color:#b0899b;
+}
+
+/* ---- 小册子（打开后） ---- */
+.livro{
+  grid-area:1/1;
+  position:relative;
+  width:100%;
+  height:min(58vh,500px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translateY(30px) scale(.93);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1),visibility 0s linear .6s;
+}
+.container.aberto .sobre{
+  opacity:0;
+  pointer-events:none;
+  animation:none;
+  transform:translateY(-28px) rotateX(40deg) scale(.86);
+}
+.container.aberto .livro{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:none;
+  transition:opacity .6s ease .2s,transform .75s cubic-bezier(.22,1,.36,1) .2s,visibility 0s;
+}
+
+.paginas{position:relative;width:100%;height:100%;}
+.pagina{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translateX(4.5%) scale(.985);
+  transition:opacity .42s ease,transform .5s cubic-bezier(.22,1,.36,1),visibility 0s linear .5s;
+}
+.pagina.ativa{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:none;
+  transition:opacity .45s ease,transform .55s cubic-bezier(.22,1,.36,1),visibility 0s;
+}
+.pagina.sai-esq{opacity:0;transform:translateX(-5%) scale(.99);visibility:visible;}
+.pagina.sai-dir{opacity:0;transform:translateX(5%) scale(.99);visibility:visible;}
+
+/* 纸 */
+.folha{
+  position:relative;
+  width:100%;
+  height:100%;
+  border-radius:16px;
+  padding:clamp(20px,3.4vh,38px) clamp(24px,3.4vw,54px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(7px,1.5vh,15px);
+  text-align:center;
+  color:var(--ink);
+  overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.72),rgba(255,255,255,0) 55%),
+    linear-gradient(90deg,rgba(120,80,60,.1),rgba(120,80,60,0) 7%),
+    repeating-linear-gradient(180deg,rgba(214,59,110,.045) 0 1px,transparent 1px 27px),
+    linear-gradient(160deg,#fffaf1,#fff2e2);
+  box-shadow:0 30px 70px rgba(20,6,30,.55),0 0 0 1px rgba(255,255,255,.5) inset;
+}
+.folha::before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid var(--linha-ouro);
+  border-radius:9px;
+  pointer-events:none;
+}
+.folha::after{
+  content:"";
+  position:absolute;
+  inset:16px;
+  border:1px solid rgba(178,132,64,.16);
+  border-radius:6px;
+  pointer-events:none;
+}
+
+/* 进页时逐个小动画 */
+.pagina.ativa .folha > *{animation:entra-pagina .62s cubic-bezier(.22,1,.36,1) both;}
+.pagina.ativa .folha > *:nth-child(1){animation-delay:.06s;}
+.pagina.ativa .folha > *:nth-child(2){animation-delay:.12s;}
+.pagina.ativa .folha > *:nth-child(3){animation-delay:.18s;}
+.pagina.ativa .folha > *:nth-child(4){animation-delay:.24s;}
+.pagina.ativa .folha > *:nth-child(5){animation-delay:.3s;}
+.pagina.ativa .folha > *:nth-child(6){animation-delay:.36s;}
+.pagina.ativa .folha > *:nth-child(7){animation-delay:.42s;}
+
+/* 烫金标题 */
+.titulo{
+  margin:0;
+  font-size:clamp(21px,2.5vw,30px);
+  font-weight:600;
+  letter-spacing:.16em;
+  text-indent:.16em;
+  background:linear-gradient(115deg,#a8712a,#e6c073 42%,#b07c30 68%,#dcae60);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.75));
+}
+
+.ornamento{color:var(--gold-deep);width:clamp(120px,16vw,170px);opacity:.9;}
+.ornamento svg{display:block;width:100%;height:auto;}
+
+/* 第 1 页 */
+.userImg{
+  width:clamp(84px,10vw,108px);
+  aspect-ratio:1;
+  border-radius:50%;
+  padding:4px;
+  background:linear-gradient(140deg,#f0cf8e,#ffeec4 32%,#d9a94a 58%,#f6e0b0);
+  box-shadow:
+    0 0 0 1px rgba(178,132,64,.55),
+    0 0 0 6px rgba(255,255,255,.62),
+    0 0 0 7px rgba(178,132,64,.28),
+    0 14px 30px rgba(200,120,140,.3);
+}
+.userImg svg{display:block;width:100%;height:100%;border-radius:50%;background:#ffe3ef;}
+.capa-nome{
+  margin:0;
+  font-family:var(--font-hand);
+  font-size:clamp(30px,4.2vw,50px);
+  letter-spacing:.06em;
+  background:linear-gradient(120deg,#b03050,#e2738f 45%,#a82a4a);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+.capa-sub{
+  margin:0;
+  font-size:clamp(11px,1.2vw,13px);
+  letter-spacing:.4em;
+  text-indent:.4em;
+  color:var(--ink-soft);
+}
+.capa-verso{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:clamp(13px,1.35vw,16px);
+  line-height:2;
+  letter-spacing:.1em;
+  color:#5d4157;
+}
+.dica-virar{
+  margin:0;
+  font-size:11.5px;
+  letter-spacing:.18em;
+  color:rgba(122,90,114,.65);
+  transition:opacity .5s ease;
+}
+.container.virado .dica-virar{opacity:0;}
+
+/* 第 2 页 */
+.texto{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:clamp(13.5px,1.4vw,16.5px);
+  line-height:2.1;
+  letter-spacing:.06em;
+  color:#4a3145;
+  max-width:34em;
+}
+.selos{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;}
+.boost{
+  padding:6px 16px;
+  border-radius:999px;
+  font-size:clamp(12px,1.3vw,14px);
+  letter-spacing:.14em;
+  color:#8a4a12;
+  background:linear-gradient(120deg,rgba(255,212,121,.9),rgba(255,143,184,.5));
+  box-shadow:0 3px 10px rgba(200,140,60,.18),0 0 0 1px rgba(255,255,255,.6) inset;
+}
+.boost.alt{color:#8c2a48;background:linear-gradient(120deg,rgba(255,143,184,.75),rgba(255,212,121,.55));}
+.boost.alt2{color:#2f5a4e;background:linear-gradient(120deg,rgba(143,217,196,.8),rgba(143,201,255,.5));}
+
+/* 第 3 页 */
+.desejos{
+  list-style:none;
+  margin:0;
+  padding:0;
+  width:min(520px,100%);
+  display:flex;
+  flex-direction:column;
+  gap:clamp(7px,1.3vh,13px);
+}
+.desejos li{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:clamp(7px,1.2vh,12px) 16px;
+  border-radius:12px;
+  background:linear-gradient(120deg,rgba(255,255,255,.8),rgba(255,244,230,.55));
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 6px 16px rgba(150,110,90,.1);
+}
+.ico{
+  flex:0 0 34px;
+  width:34px;height:34px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  color:var(--gold-deep);
+  background:radial-gradient(circle at 35% 30%,#fff5de,#ffe4ba);
+  box-shadow:0 2px 6px rgba(180,140,80,.25);
+}
+.ico svg{width:19px;height:19px;}
+.d-txt{display:flex;flex-direction:column;gap:2px;text-align:left;}
+.d-txt b{font-weight:600;font-size:clamp(13.5px,1.4vw,15.5px);letter-spacing:.12em;color:var(--rose-deep);}
+.d-txt i{font-style:normal;font-size:clamp(12.5px,1.3vw,14.5px);color:#6b4a63;}
+
+/* 第 4 页 */
+.assinatura-label{
+  margin:0;
+  font-family:var(--font-hand);
+  font-size:clamp(13px,1.4vw,16px);
+  letter-spacing:.16em;
+  color:var(--ink-soft);
+}
+.assinatura{
+  margin:0;
+  font-family:var(--font-hand);
+  font-size:clamp(30px,4vw,46px);
+  background:linear-gradient(120deg,#b03050,#e2738f 50%,#a82a4a);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+.final{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:clamp(13.5px,1.45vw,17px);
+  letter-spacing:.14em;
+  color:#4a3145;
+}
+.coracao{
+  appearance:none;
+  border:0;
+  background:none;
+  padding:0;
+  width:clamp(56px,6.4vw,78px);
+  cursor:pointer;
+  filter:drop-shadow(0 8px 18px rgba(200,60,110,.35));
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.coracao svg{display:block;width:100%;height:auto;}
+.coracao:hover{transform:scale(1.12) rotate(-4deg);}
+.coracao:focus-visible{outline:2px solid var(--rose-deep);outline-offset:5px;border-radius:50%;}
+.ps{
+  margin:0;
+  font-size:clamp(11px,1.15vw,12.5px);
+  letter-spacing:.1em;
+  color:rgba(122,90,114,.85);
+}
+
+/* 翻页控件 */
+.nav-seta{
+  position:absolute;
+  top:50%;
+  z-index:4;
+  width:clamp(32px,3.2vw,42px);
+  aspect-ratio:1;
+  transform:translateY(-50%);
+  display:grid;
+  place-items:center;
+  padding:0 0 3px;
+  border:1px solid var(--linha-ouro);
+  border-radius:50%;
+  font-family:var(--font-serif);
+  font-size:clamp(19px,2vw,24px);
+  line-height:1;
+  color:var(--gold-deep);
+  background:linear-gradient(160deg,rgba(255,250,240,.97),rgba(255,238,215,.92));
+  box-shadow:0 6px 18px rgba(90,50,40,.18);
+  cursor:pointer;
+  transition:transform .25s ease,box-shadow .25s ease,opacity .3s ease;
+}
+.nav-seta:hover{box-shadow:0 10px 24px rgba(90,50,40,.26);}
+.nav-prev{left:clamp(8px,1.2vw,18px);}
+.nav-next{right:clamp(8px,1.2vw,18px);}
+.nav-prev:hover{transform:translateY(-50%) translateX(-2px);}
+.nav-next:hover{transform:translateY(-50%) translateX(2px);}
+.nav-seta.desativado{opacity:0;pointer-events:none;}
+.nav-seta:focus-visible{outline:2px solid var(--rose-deep);outline-offset:3px;}
+
+.pontos{
+  position:absolute;
+  left:50%;
+  bottom:clamp(16px,2.4vh,24px);
+  transform:translateX(-50%);
+  z-index:4;
+  display:flex;
+  gap:10px;
+}
+.ponto{
+  width:7px;height:7px;
+  padding:0;
+  border:1px solid rgba(178,132,64,.6);
+  border-radius:50%;
+  background:transparent;
+  cursor:pointer;
+  transition:transform .25s ease,background .25s ease,border-color .25s ease;
+}
+.ponto:hover{border-color:var(--rose-deep);}
+.ponto.ativo{
+  background:linear-gradient(120deg,#c08a2e,#e8c06a);
+  border-color:transparent;
+  transform:scale(1.35);
+}
+.ponto:focus-visible{outline:2px solid var(--rose-deep);outline-offset:3px;}
+
+/* ================= 歌词 ================= */
+.letra{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-height:clamp(28px,4.4vh,44px);
+}
+.letra-linha{
+  margin:0;
+  font-size:clamp(15px,1.7vw,21px);
+  letter-spacing:.18em;
+  text-align:center;
+  color:#fffaf2;
+  text-shadow:0 1px 3px rgba(48,12,54,.95),0 2px 14px rgba(48,12,54,.85),0 0 30px rgba(255,212,121,.3);
+  opacity:0;
+  transform:translateY(7px);
+  transition:opacity .55s ease,transform .55s ease;
+}
+.letra-linha.mostra{opacity:1;transform:none;}
+.letra-linha.mostra::before{content:'♪';margin-right:.7em;opacity:.65;}
+.letra-linha.mostra::after{content:'♪';margin-left:.7em;opacity:.65;}
+
+/* ================= 背景音乐 ================= */
+.musica{
+  position:fixed;
+  right:clamp(12px,2.2vw,26px);
+  bottom:clamp(12px,2.2vh,24px);
+  z-index:6;
+  display:flex;
+  flex-direction:column-reverse;
+  align-items:flex-end;
+  gap:7px;
+}
+.musica-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 16px 9px 13px;
+  border-radius:999px;
+  border:1px solid rgba(255,247,234,.25);
+  background:rgba(36,16,48,.42);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  color:var(--cream);
+  font-family:inherit;
+  font-size:12.5px;
+  letter-spacing:.12em;
+  cursor:pointer;
+  transition:background .25s ease,border-color .25s ease,transform .25s ease;
+}
+.musica-btn:hover{background:rgba(60,26,70,.55);border-color:rgba(255,247,234,.45);transform:translateY(-1px);}
+.musica-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+.equalizador{display:flex;align-items:flex-end;gap:2.5px;height:14px;}
+.equalizador i{display:block;width:2.5px;height:5px;border-radius:2px;background:currentColor;opacity:.55;}
+.musica-btn.tocando .equalizador i{opacity:1;animation:eq .9s ease-in-out infinite;}
+.musica-btn.tocando .equalizador i:nth-child(2){animation-delay:.16s;}
+.musica-btn.tocando .equalizador i:nth-child(3){animation-delay:.32s;}
+.musica-nome{
+  font-size:11px;
+  letter-spacing:.16em;
+  color:rgba(255,247,234,.62);
+  text-shadow:0 2px 8px rgba(58,16,64,.7);
+}
+
+/* ================= 彩纸 / 心心 ================= */
+.confetti-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:20;}
+.confetti{position:absolute;top:-6%;width:8px;height:14px;border-radius:2px;animation:fall linear forwards;}
+.coracao-f{
+  position:absolute;
+  bottom:-6%;
+  font-size:18px;
+  color:#ff9dc0;
+  text-shadow:0 0 12px rgba(255,143,184,.75);
+  animation:subir-coracao linear forwards;
+}
+
+/* ================= 关键帧 ================= */
+@keyframes float{from{transform:translateY(0) rotate(-1.5deg);}to{transform:translateY(-18px) rotate(1.5deg);}}
+@keyframes sway{from{transform:rotate(-.7deg);}to{transform:rotate(.7deg);}}
+@keyframes drift{from{transform:translateX(0);}to{transform:translateX(24px);}}
+@keyframes flicker{from{transform:scaleY(1);opacity:.95;}to{transform:scaleY(1.14) translateY(-1.5px);opacity:1;}}
+@keyframes twinkle{from{opacity:.45;}to{opacity:.95;}}
+@keyframes respira{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-6px) scale(1.015);}}
+@keyframes eq{0%,100%{height:5px;}50%{height:14px;}}
+@keyframes entra-pagina{from{opacity:0;transform:translateY(11px);}to{opacity:1;transform:none;}}
+@keyframes brilho{0%,72%{background-position:170% 0;}100%{background-position:-70% 0;}}
+@keyframes fall{
+  from{transform:translate3d(0,0,0) rotate(0deg);opacity:1;}
+  70%{opacity:1;}
+  to{transform:translate3d(var(--dx,0px),105vh,0) rotate(var(--rot,540deg));opacity:0;}
+}
+@keyframes subir-coracao{
+  from{transform:translateY(0) scale(.6) rotate(0deg);opacity:0;}
+  12%{opacity:1;}
+  to{transform:translateY(-102vh) scale(1.1) rotate(var(--rot,25deg));opacity:0;}
+}
+
+/* ================= 响应式 ================= */
+@media (max-width:820px){
+  .palco{padding:clamp(72px,11vh,104px) 12px clamp(76px,12vh,110px);}
+  .text-happybirthday{width:min(300px,72vw);}
+  .carta{width:min(560px,94vw);}
+  .livro{height:min(66svh,560px);}
+  .folha{padding:clamp(18px,3vh,28px) clamp(20px,5.5vw,34px);}
+  .nav-seta{width:32px;}
+  .nav-prev{left:6px;}
+  .nav-next{right:6px;}
+  .userImg{width:76px;}
+  .capa-nome{font-size:clamp(28px,8vw,38px);}
+  .desejos li{padding:8px 12px;gap:11px;}
+  .ico{flex-basis:30px;width:30px;height:30px;}
+  .ico svg{width:17px;height:17px;}
+  .cake{display:none;}
+  .balloon-item1:nth-child(1){left:2%;top:13%;width:min(88px,13vw);}
+  .balloon-item1:nth-child(2){right:3%;top:20%;width:min(74px,11vw);}
+  .cloud{width:min(190px,42vw);}
+}
+
+@media (max-height:640px){
+  .palco{padding-top:clamp(60px,10vh,84px);gap:8px;}
+  .text-happybirthday{width:min(360px,42vw,24vh);}
+  .livro{height:min(60vh,420px);}
+  .folha{gap:6px;}
+}
+
+/* 尊重「减少动态效果」 */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+/* ================= 左右分栏的信纸（左：装饰栏，右：正文） ================= */
+.folha.dividida{
+  flex-direction:row;
+  align-items:center;
+  gap:clamp(26px,4vw,58px);
+}
+.col-esq{
+  position:relative;
+  flex:0 0 clamp(180px,24%,250px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(10px,1.8vh,16px);
+  text-align:center;
+}
+.col-esq::after{
+  content:"";
+  position:absolute;
+  right:calc(-1 * clamp(13px,2vw,29px));
+  top:10%;
+  bottom:10%;
+  width:1px;
+  background:linear-gradient(180deg,transparent,var(--linha-ouro),transparent);
+}
+.col-dir{
+  position:relative;
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(8px,1.6vh,15px);
+  text-align:center;
+}
+.selo-char{
+  width:clamp(86px,10vw,112px);
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  font-family:var(--font-serif);
+  font-size:clamp(34px,4.2vw,46px);
+  color:#b03050;
+  background:radial-gradient(circle at 35% 30%,#fffdf6,#ffeccd);
+  box-shadow:0 0 0 1px var(--linha-ouro) inset,0 0 0 7px rgba(178,132,64,.1),0 12px 26px rgba(180,140,80,.2);
+}
+.etiqueta{
+  margin:0;
+  font-size:clamp(11px,1.15vw,12.5px);
+  letter-spacing:.24em;
+  text-indent:.24em;
+  color:rgba(122,90,114,.8);
+}
+.col-esq .userImg{width:clamp(92px,11vw,120px);}
+.col-esq .capa-nome{font-size:clamp(24px,3vw,34px);}
+.col-esq .coracao{width:clamp(68px,7.6vw,92px);}
+
+.pagina.ativa .folha.dividida > *{animation:none;}
+.pagina.ativa .col-esq > *,
+.pagina.ativa .col-dir > *{animation:entra-pagina .62s cubic-bezier(.22,1,.36,1) both;}
+.pagina.ativa .col-esq > *:nth-child(1){animation-delay:.08s;}
+.pagina.ativa .col-esq > *:nth-child(2){animation-delay:.16s;}
+.pagina.ativa .col-dir > *:nth-child(1){animation-delay:.14s;}
+.pagina.ativa .col-dir > *:nth-child(2){animation-delay:.22s;}
+.pagina.ativa .col-dir > *:nth-child(3){animation-delay:.3s;}
+.pagina.ativa .col-dir > *:nth-child(4){animation-delay:.38s;}
+.pagina.ativa .col-dir > *:nth-child(5){animation-delay:.46s;}
+
+@media (max-width:820px){
+  .folha.dividida{flex-direction:column;gap:clamp(10px,1.8vh,16px);}
+  .col-esq{flex:0 0 auto;flex-direction:row;gap:12px;}
+  .col-esq::after{display:none;}
+  .col-esq .userImg{width:64px;}
+  .col-esq .capa-nome{font-size:22px;}
+  .selo-char{width:52px;font-size:23px;box-shadow:0 0 0 1px var(--linha-ouro) inset,0 0 0 4px rgba(178,132,64,.1);}
+  .col-esq .coracao{width:52px;}
+  .etiqueta{font-size:11.5px;}
+}
+/* =========================================================
+   精修层：纸的质感、烫金的流动、蜡封、景深、翻页的一道光
+   ========================================================= */
+
+/* ---- 1. 纸：叠起来的纸 + 纸纹 + 四角金点 ---- */
+.folha{
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.055'/%3E%3C/svg%3E"),
+    radial-gradient(115% 85% at 50% 0%,rgba(255,255,255,.75),rgba(255,255,255,0) 58%),
+    radial-gradient(120% 120% at 50% 50%,rgba(255,255,255,0) 62%,rgba(150,105,70,.075) 100%),
+    linear-gradient(90deg,rgba(120,80,60,.1),rgba(120,80,60,0) 7%),
+    repeating-linear-gradient(180deg,rgba(214,59,110,.045) 0 1px,transparent 1px 27px),
+    linear-gradient(160deg,#fffaf1,#fff2e2);
+  background-repeat:repeat,no-repeat,no-repeat,no-repeat,repeat,no-repeat;
+  background-size:180px 180px,auto,auto,auto,auto,auto;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 5px 0 -2px #f4e4cd,
+    0 11px 0 -5px #ecd9bf,
+    0 26px 46px rgba(20,6,30,.5),
+    0 50px 90px rgba(20,6,30,.3);
+}
+/* 四角金点 */
+.livro::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  border-radius:16px;
+  pointer-events:none;
+  background-image:radial-gradient(circle,rgba(178,132,64,.85) 1.6px,rgba(178,132,64,0) 2.1px);
+  background-repeat:no-repeat;
+  background-size:5px 5px;
+  background-position:
+    9.5px 9.5px,
+    calc(100% - 14.5px) 9.5px,
+    9.5px calc(100% - 14.5px),
+    calc(100% - 14.5px) calc(100% - 14.5px);
+}
+/* 一道慢慢扫过的金光 */
+.livro::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  border-radius:16px;
+  pointer-events:none;
+  background-image:linear-gradient(112deg,
+    transparent 38%,
+    rgba(255,255,255,.42) 47%,
+    rgba(255,246,214,.3) 52%,
+    transparent 61%);
+  background-size:280% 100%;
+  background-repeat:no-repeat;
+  animation:folheado 9s ease-in-out infinite;
+}
+
+/* ---- 2. 字：铅字压进纸里的感觉 ---- */
+.capa-verso,.texto,.final,.ps,.capa-sub,.etiqueta,.d-txt i,.assinatura-label{
+  text-shadow:0 1px 0 rgba(255,255,255,.8);
+}
+.titulo,.capa-nome,.assinatura{
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.85)) drop-shadow(0 1px 1px rgba(150,100,60,.18));
+}
+
+/* ---- 3. 蜡封与信封 ---- */
+.sobre-selo{
+  box-shadow:
+    0 7px 18px rgba(150,20,60,.45),
+    0 0 0 3px rgba(255,255,255,.22) inset,
+    0 -4px 10px rgba(110,10,42,.4) inset,
+    0 3px 6px rgba(255,255,255,.28) inset;
+}
+.sobre-selo::after{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:inherit;
+  background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.45),rgba(255,255,255,0) 44%);
+  pointer-events:none;
+}
+.sobre-nome{
+  text-shadow:0 1px 0 rgba(255,255,255,.85);
+}
+
+/* ---- 4. 背景景深光斑 ---- */
+.bokeh{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:.45;
+  filter:blur(15px);
+  background-image:
+    radial-gradient(circle at 12% 38%,rgba(255,214,180,.5),transparent 40%),
+    radial-gradient(circle at 22% 54%,rgba(255,180,205,.42),transparent 42%),
+    radial-gradient(circle at 82% 40%,rgba(255,226,180,.42),transparent 40%),
+    radial-gradient(circle at 70% 56%,rgba(220,190,255,.36),transparent 42%),
+    radial-gradient(circle at 46% 26%,rgba(255,200,220,.4),transparent 44%),
+    radial-gradient(circle at 8% 34%,rgba(190,200,255,.3),transparent 40%),
+    radial-gradient(circle at 92% 30%,rgba(255,214,180,.34),transparent 40%),
+    radial-gradient(circle at 36% 16%,rgba(255,240,210,.3),transparent 42%),
+    radial-gradient(circle at 62% 22%,rgba(255,190,215,.26),transparent 40%);
+  animation:bokeh-flutua 26s ease-in-out infinite alternate;
+}
+
+/* ---- 5. 打开时从信封散开的一圈暖光 ---- */
+.carta::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:min(720px,84vw);
+  aspect-ratio:1;
+  z-index:0;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.25);
+  background:radial-gradient(closest-side,rgba(255,238,196,.55),rgba(255,214,150,.18) 46%,rgba(255,214,150,0) 72%);
+}
+.container.aberto .carta::after{animation:florescer 1.5s ease-out .12s both;}
+
+/* ---- 6. 更精致的翻页控件 ---- */
+.nav-seta{
+  background:linear-gradient(160deg,#fffdf8,#f8e8cd);
+  box-shadow:0 4px 14px rgba(90,50,40,.2),0 0 0 1px rgba(255,255,255,.75) inset;
+}
+.nav-seta:hover{border-color:rgba(178,132,64,.85);}
+.ponto{width:6.5px;height:6.5px;}
+.ponto.ativo{
+  box-shadow:0 0 0 3px rgba(178,132,64,.16),0 1px 3px rgba(120,70,40,.3);
+}
+
+/* ---- 7. 纹样与封面小叶 ---- */
+.ornamento{width:clamp(132px,17vw,190px);}
+.folhinha{
+  width:clamp(64px,7.4vw,88px);
+  color:var(--gold-deep);
+  opacity:.85;
+  margin-top:-2px;
+}
+
+/* ---- 8. 鼠标划过时，纸面轻轻侧一下（手机 / 减动效时关闭） ---- */
+.paginas{
+  transform:perspective(1500px)
+            rotateX(calc(var(--ty,0) * 1.1deg))
+            rotateY(calc(var(--tx,0) * -1.5deg));
+  transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+
+/* ---- 关键帧 ---- */
+@keyframes folheado{
+  0%,66%{background-position:190% 0;}
+  100%{background-position:-90% 0;}
+}
+@keyframes bokeh-flutua{
+  from{transform:translate3d(0,0,0) scale(1);}
+  to{transform:translate3d(0,-26px,0) scale(1.05);}
+}
+@keyframes florescer{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.25);}
+  30%{opacity:.95;}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.2);}
+}
+
+@media (max-width:820px){
+  .paginas{transform:none;}
+  .bokeh{opacity:.55;}
+}
+@media (prefers-reduced-motion:reduce){
+  .livro::after{display:none;}
+  .paginas{transform:none;}
+}
+/* =========================================================
+   第三轮：内容加长后的版式 + 更多花样 + 背景浮现的歌词
+   ========================================================= */
+
+/* ---- 信体（左对齐，像真的写信） ---- */
+.carta-txt{text-align:left;max-width:32em;}
+.carta-txt .realce{
+  display:inline-block;
+  margin-top:4px;
+  font-weight:600;
+  letter-spacing:.06em;
+  color:var(--rose-deep);
+}
+.final-sub{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:clamp(12.5px,1.3vw,15px);
+  letter-spacing:.1em;
+  color:#6b4a63;
+  text-shadow:0 1px 0 rgba(255,255,255,.8);
+}
+
+/* ---- 愿望：点一下点亮 ---- */
+.desejos li.desejo{cursor:pointer;position:relative;transition:background .3s ease,box-shadow .3s ease,transform .3s ease;}
+.desejos li.desejo:hover{transform:translateX(3px);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 8px 20px rgba(150,110,90,.16);}
+.desejos li.desejo:focus-visible{outline:2px solid var(--rose-deep);outline-offset:3px;}
+.desejos li.aceso{
+  background:linear-gradient(120deg,rgba(255,246,220,.96),rgba(255,229,193,.8));
+  box-shadow:0 0 0 1px rgba(200,150,70,.45) inset,0 0 22px rgba(255,205,120,.45),0 8px 18px rgba(150,110,90,.14);
+}
+.desejos li.aceso .ico{
+  color:#a0631c;
+  background:radial-gradient(circle at 35% 30%,#fff8e2,#ffd479);
+  box-shadow:0 0 14px rgba(255,190,90,.6);
+}
+.acende{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%) scale(.4);
+  font-size:13px;
+  color:#d9a94a;
+  opacity:0;
+  transition:opacity .3s ease,transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.desejos li.aceso .acende{opacity:1;transform:translateY(-50%) scale(1);animation:centelha 2.2s ease-in-out infinite;}
+.dica-acende{
+  margin:2px 0 0;
+  font-size:11.5px;
+  letter-spacing:.2em;
+  color:rgba(122,90,114,.7);
+}
+
+/* ---- 约定清单：点一下打勾 ---- */
+.lista{
+  list-style:none;
+  margin:0;
+  padding:0;
+  width:min(540px,100%);
+  display:flex;
+  flex-direction:column;
+  gap:clamp(6px,1.1vh,11px);
+}
+.item{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:clamp(6px,1vh,10px) 15px;
+  border-radius:10px;
+  cursor:pointer;
+  background:linear-gradient(120deg,rgba(255,255,255,.75),rgba(255,244,230,.5));
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 5px 14px rgba(150,110,90,.08);
+  transition:background .3s ease,box-shadow .3s ease,transform .3s ease;
+}
+.item:hover{transform:translateX(3px);}
+.item:focus-visible{outline:2px solid var(--rose-deep);outline-offset:3px;}
+.marca{
+  position:relative;
+  flex:0 0 18px;
+  width:18px;
+  height:18px;
+  border:1px solid rgba(178,132,64,.55);
+  border-radius:50%;
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+.marca::after{
+  content:"";
+  position:absolute;
+  left:5px;
+  top:3px;
+  width:6px;
+  height:10px;
+  border-right:2px solid #fff;
+  border-bottom:2px solid #fff;
+  border-radius:1px;
+  opacity:0;
+  transform:rotate(42deg) scale(.3);
+  transition:opacity .25s ease,transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.item-txt{font-size:clamp(13px,1.35vw,15.5px);color:var(--ink);text-align:left;}
+.item.aceso{
+  background:linear-gradient(120deg,rgba(255,246,220,.96),rgba(255,229,193,.82));
+  box-shadow:0 0 0 1px rgba(200,150,70,.45) inset,0 0 20px rgba(255,205,120,.42);
+}
+.item.aceso .marca{
+  border-color:transparent;
+  background:radial-gradient(circle at 35% 30%,#ffefc9,#d9a94a);
+  box-shadow:0 2px 8px rgba(190,140,50,.4);
+}
+.item.aceso .marca::after{opacity:1;transform:rotate(42deg) scale(1);}
+.item.aceso .item-txt{color:#8a5a12;}
+
+/* ---- 背景里浮现的歌词 ---- */
+.letra-fundo{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  overflow:hidden;
+}
+.letra-fantasma{
+  position:absolute;
+  left:50%;
+  top:99%;
+  margin:0;
+  white-space:nowrap;
+  font-family:var(--font-serif);
+  font-size:clamp(34px,6.6vw,96px);
+  letter-spacing:.18em;
+  color:rgba(255,250,243,.97);
+  text-shadow:0 0 72px rgba(255,214,150,.55),0 0 30px rgba(120,60,110,.65),0 2px 5px rgba(60,20,70,.35);
+  opacity:0;
+  filter:blur(10px);
+  will-change:transform,opacity,filter;
+  animation:sobe-letra 16s linear forwards;
+}
+/* 第二种：竖排，从侧边升上来 */
+.letra-fantasma.vertical{
+  writing-mode:vertical-rl;
+  font-size:clamp(26px,4.6vw,68px);
+  letter-spacing:.16em;
+  animation-duration:18s;
+}
+/* 第三种：大字横着慢慢飘过 */
+.letra-fantasma.corre{
+  left:100%;
+  top:76%;
+  animation:corre-letra 15s linear forwards;
+}
+@keyframes sobe-letra{
+  0%{opacity:0;filter:blur(13px);transform:translate(-50%,0) scale(.99);}
+  8%{opacity:.5;filter:blur(4px);}
+  40%{opacity:.44;filter:blur(5px);}
+  72%{opacity:.28;filter:blur(7px);}
+  90%{opacity:.1;}
+  100%{opacity:0;filter:blur(12px);transform:translate(-50%,-98vh) scale(1.02);}
+}
+@keyframes corre-letra{
+  0%{opacity:0;filter:blur(10px);transform:translateX(0);}
+  7%{opacity:.5;filter:blur(3px);}
+  78%{opacity:.42;filter:blur(4px);}
+  100%{opacity:0;filter:blur(10px);transform:translateX(-240%);}
+}
+@keyframes centelha{
+  0%,100%{opacity:.65;transform:translateY(-50%) scale(.92);}
+  50%{opacity:1;transform:translateY(-50%) scale(1.15);}
+}
+
+/* 信纸页：标题也左对齐，整页像一封手写信 */
+.folha.carta .col-dir{align-items:flex-start;text-align:left;}
+.folha.carta .col-dir .titulo,
+.folha.carta .col-dir .ornamento{align-self:flex-start;}
+.folha.carta .col-dir .carta-txt{max-width:31em;}
+
+/* 第六页内容多一项，补上逐个小动画的延迟 */
+.pagina.ativa .col-dir > *:nth-child(6){animation-delay:.52s;}
+.pagina.ativa .col-dir > *:nth-child(7){animation-delay:.58s;}
+
+@media (max-width:820px){
+  .letra-fantasma{font-size:clamp(20px,6.4vw,30px);letter-spacing:.18em;}
+  .acende{right:10px;}
+  .desejos li.desejo{padding-right:34px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .letra-fundo{display:none;}
+}
+/* =========================================================
+   第四轮：版式更花 + 歌词更大、三种浮现方式
+   ========================================================= */
+
+/* ---- 第 2 页：一整页只有一句话 ---- */
+.cartaz{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:clamp(30px,4.8vw,60px);
+  line-height:1.5;
+  letter-spacing:.1em;
+  background:linear-gradient(115deg,#a8712a,#e8c476 42%,#b07c30 68%,#dcae60);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.85));
+}
+.cartaz-sub{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:clamp(12.5px,1.35vw,16px);
+  letter-spacing:.2em;
+  color:#6b4a63;
+  text-shadow:0 1px 0 rgba(255,255,255,.8);
+}
+
+/* ---- 第 4 页：愿望改成 2×2 网格 ---- */
+.desejos.grade{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(8px,1.2vw,14px);
+  width:min(570px,100%);
+}
+.desejos.grade li{
+  flex-direction:column;
+  align-items:flex-start;
+  gap:7px;
+  padding:clamp(9px,1.5vh,15px) 30px clamp(9px,1.5vh,15px) 15px;
+  text-align:left;
+}
+.desejos.grade li .acende{top:16px;transform:scale(.4);}
+.desejos.grade li.aceso .acende{transform:scale(1);}
+
+/* ---- 第 5 页：时间线 ---- */
+.linha-tempo{
+  list-style:none;
+  margin:0;
+  padding:0;
+  position:relative;
+  width:min(510px,100%);
+  display:flex;
+  flex-direction:column;
+  gap:clamp(9px,1.7vh,18px);
+}
+.linha-tempo::before{
+  content:"";
+  position:absolute;
+  left:7px;
+  top:9px;
+  bottom:9px;
+  width:1px;
+  background:linear-gradient(180deg,rgba(178,132,64,0),rgba(178,132,64,.55),rgba(178,132,64,0));
+}
+.tempo{
+  position:relative;
+  padding-left:30px;
+  cursor:pointer;
+  transition:transform .3s ease;
+}
+.tempo:hover{transform:translateX(3px);}
+.tempo:focus-visible{outline:2px solid var(--rose-deep);outline-offset:4px;border-radius:6px;}
+.tempo p{
+  margin:0;
+  text-align:left;
+  font-family:var(--font-serif);
+  font-size:clamp(13.5px,1.4vw,16.5px);
+  letter-spacing:.08em;
+  color:#4a3145;
+  text-shadow:0 1px 0 rgba(255,255,255,.8);
+  transition:color .3s ease;
+}
+.ponto-tempo{
+  position:absolute;
+  left:2px;
+  top:50%;
+  transform:translateY(-50%);
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff8e4,#e6cf9a);
+  box-shadow:0 0 0 3px rgba(255,247,234,.95),0 0 0 4px rgba(178,132,64,.25);
+  transition:background .3s ease,box-shadow .3s ease,transform .3s ease;
+}
+.tempo.aceso .ponto-tempo{
+  background:radial-gradient(circle at 35% 30%,#fff3cf,#d9a94a);
+  box-shadow:0 0 0 3px rgba(255,247,234,.95),0 0 0 4px rgba(200,150,70,.5),0 0 18px rgba(255,190,90,.8);
+  transform:translateY(-50%) scale(1.2);
+}
+.tempo.aceso p{color:#8a5a12;}
+
+/* ---- 第 6 页：竖排小诗 + 印章 ---- */
+.poema{
+  display:flex;
+  flex-direction:row-reverse;
+  align-items:flex-start;
+  justify-content:center;
+  gap:clamp(12px,2vw,30px);
+}
+.poema p{
+  margin:0;
+  writing-mode:vertical-rl;
+  font-family:var(--font-serif);
+  font-size:clamp(15px,1.9vw,23px);
+  letter-spacing:.3em;
+  color:#4a3145;
+  text-shadow:0 1px 0 rgba(255,255,255,.85);
+}
+.sinete{
+  writing-mode:horizontal-tb;
+  align-self:flex-end;
+  display:grid;
+  place-items:center;
+  width:clamp(28px,3.1vw,38px);
+  aspect-ratio:1;
+  margin-left:clamp(6px,1vw,14px);
+  font-family:var(--font-serif);
+  font-size:clamp(15px,1.7vw,20px);
+  color:#fff3f3;
+  background:linear-gradient(150deg,#c2405f,#8e1a3f);
+  border-radius:5px;
+  box-shadow:0 5px 14px rgba(140,30,60,.35),0 0 0 1px rgba(255,255,255,.22) inset;
+  transform:rotate(-3deg);
+}
+.poema-data{
+  margin:0;
+  font-size:clamp(11px,1.15vw,13px);
+  letter-spacing:.3em;
+  color:rgba(122,90,114,.75);
+}
+
+/* ---- 第 7 页：落款居中 ---- */
+.coracao-wrap{display:grid;place-items:center;}
+
+@media (max-width:820px){
+  .desejos.grade{grid-template-columns:1fr;}
+  .cartaz{font-size:clamp(26px,7.4vw,40px);}
+  .letra-fantasma{font-size:clamp(28px,9.4vw,52px);letter-spacing:.12em;}
+  .letra-fantasma.vertical{font-size:clamp(22px,7vw,40px);}
+  .poema p{font-size:clamp(14px,3.6vw,19px);letter-spacing:.22em;}
+}
+/* ---- 手机端把愿望卡压缩，保证一屏放得下 ---- */
+@media (max-width:820px){
+  .musica-nome{display:none;}
+  .nav-seta{top:auto;bottom:clamp(9px,1.4vh,15px);transform:none;width:30px;font-size:18px;}
+  .nav-prev{left:12px;}
+  .nav-next{right:12px;}
+  .nav-prev:hover,.nav-next:hover{transform:none;}
+  .pontos{bottom:clamp(14px,2.2vh,20px);}
+  .letra{min-height:clamp(26px,4vh,38px);}
+  .desejos.grade li{
+    padding:7px 26px 7px 12px;
+    gap:5px;
+  }
+  .desejos.grade li .ico{flex-basis:24px;width:24px;height:24px;}
+  .desejos.grade li .ico svg{width:14px;height:14px;}
+  .desejos.grade li .d-txt b{font-size:13px;}
+  .desejos.grade li .d-txt i{font-size:12px;}
+  .desejos.grade{gap:clamp(6px,1vw,10px);}
+  .linha-tempo{gap:clamp(7px,1.4vh,14px);}
+  .tempo{padding-left:26px;}
+  .tempo p{font-size:13px;}
+}
+/* 屏幕特别矮的时候，纸里允许滚动，别把字切掉 */
+@media (max-height:640px){
+  .folha{overflow-y:auto;}
+  .folha::-webkit-scrollbar{width:0;height:0;}
+}
+/* =========================================================
+   第五轮：6 种翻页效果 + 可以戳的小玩意
+   （追加在 style.css 末尾，覆盖前面的翻页规则）
+   ========================================================= */
+
+/* ---------- 翻页：出页 ---------- */
+.pagina[class*="sai-"]{visibility:visible;}
+.pagina.sai-flip{z-index:3;transform-origin:calc(50% - var(--dir,1) * 50%) 50%;animation:sai-flip .72s cubic-bezier(.45,.05,.25,1) forwards;}
+.pagina.sai-push{z-index:1;animation:sai-push .62s cubic-bezier(.45,.05,.25,1) forwards;}
+.pagina.sai-sobe{z-index:2;transform-origin:50% calc(50% - var(--dir,1) * 50%);animation:sai-sobe .68s cubic-bezier(.45,.05,.25,1) forwards;}
+.pagina.sai-dissolve{z-index:3;animation:sai-dissolve .66s ease forwards;}
+.pagina.sai-wipe{z-index:1;animation:sai-wipe .7s cubic-bezier(.5,0,.2,1) forwards;}
+.pagina.sai-gira{z-index:2;animation:sai-gira .68s cubic-bezier(.35,0,.25,1) forwards;}
+
+/* ---------- 翻页：进页 ---------- */
+.pagina.vai-flip{z-index:2;transform-origin:calc(50% + var(--dir,1) * 50%) 50%;animation:vai-flip .74s cubic-bezier(.22,1,.36,1) both;}
+.pagina.vai-push{z-index:2;animation:vai-push .64s cubic-bezier(.22,1,.36,1) both;}
+.pagina.vai-sobe{z-index:1;transform-origin:50% calc(50% + var(--dir,1) * 50%);animation:vai-sobe .7s cubic-bezier(.22,1,.36,1) both;}
+.pagina.vai-dissolve{z-index:2;animation:vai-dissolve .7s ease both;}
+.pagina.vai-wipe{z-index:2;animation:vai-wipe .72s cubic-bezier(.25,1,.35,1) both;}
+.pagina.vai-gira{z-index:1;animation:vai-gira .7s cubic-bezier(.22,1,.36,1) both;}
+
+@keyframes sai-flip{
+  0%{opacity:1;transform:perspective(1600px) rotateY(0deg) scale(1);}
+  100%{opacity:0;transform:perspective(1600px) rotateY(calc(var(--dir,1) * -84deg)) scale(.97);}
+}
+@keyframes vai-flip{
+  0%{opacity:0;transform:perspective(1600px) rotateY(calc(var(--dir,1) * 84deg)) scale(.97);}
+  100%{opacity:1;transform:perspective(1600px) rotateY(0deg) scale(1);}
+}
+@keyframes sai-push{
+  0%{opacity:1;transform:translateX(0) scale(1);}
+  100%{opacity:.15;transform:translateX(calc(var(--dir,1) * -30%)) scale(.93);}
+}
+@keyframes vai-push{
+  0%{opacity:0;transform:translateX(calc(var(--dir,1) * 30%)) scale(.93);}
+  100%{opacity:1;transform:translateX(0) scale(1);}
+}
+@keyframes sai-sobe{
+  0%{opacity:1;transform:perspective(1500px) rotateX(0deg);}
+  100%{opacity:0;transform:perspective(1500px) rotateX(calc(var(--dir,1) * 46deg)) translateY(calc(var(--dir,1) * 8%));}
+}
+@keyframes vai-sobe{
+  0%{opacity:0;transform:perspective(1500px) rotateX(calc(var(--dir,1) * -46deg)) translateY(calc(var(--dir,1) * -8%));}
+  100%{opacity:1;transform:perspective(1500px) rotateX(0deg);}
+}
+@keyframes sai-dissolve{
+  0%{opacity:1;filter:blur(0);transform:scale(1);}
+  100%{opacity:0;filter:blur(16px);transform:scale(1.07);}
+}
+@keyframes vai-dissolve{
+  0%{opacity:0;filter:blur(16px);transform:scale(.93);}
+  100%{opacity:1;filter:blur(0);transform:scale(1);}
+}
+@keyframes sai-wipe{
+  0%{clip-path:inset(0 0 0 0);opacity:1;}
+  100%{clip-path:inset(0 calc(var(--dir,1) * 100%) 0 0);opacity:1;}
+}
+@keyframes vai-wipe{
+  0%{clip-path:inset(0 0 0 calc(var(--dir,1) * 100%));}
+  100%{clip-path:inset(0 0 0 0);}
+}
+@keyframes sai-gira{
+  0%{opacity:1;transform:rotate(0deg) scale(1) translateX(0);}
+  100%{opacity:0;transform:rotate(calc(var(--dir,1) * -7deg)) scale(.86) translateX(calc(var(--dir,1) * -14%));}
+}
+@keyframes vai-gira{
+  0%{opacity:0;transform:rotate(calc(var(--dir,1) * 7deg)) scale(.86) translateX(calc(var(--dir,1) * 14%));}
+  100%{opacity:1;transform:rotate(0deg) scale(1) translateX(0);}
+}
+
+/* 翻页时纸面上扫过一道光，翻起来更有分量 */
+.livro.virando::after{animation:varredura .72s ease-out;}
+@keyframes varredura{
+  0%{background-position:190% 0;}
+  100%{background-position:-90% 0;}
+}
+
+/* ---------- 能戳的小玩意 ---------- */
+
+/* 1) 戳纸面 / 戳歌词：蹦出小星星 */
+.faisca{
+  position:absolute;
+  width:9px;
+  height:9px;
+  pointer-events:none;
+  background:radial-gradient(circle at 40% 35%,#fff8e2,#ffd479 55%,rgba(255,212,121,0));
+  clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+  animation:faisca .95s ease-out forwards;
+}
+@keyframes faisca{
+  0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0deg);}
+  18%{opacity:1;}
+  100%{opacity:0;transform:translate(var(--fx,0px),var(--fy,-44px)) scale(1) rotate(var(--fr,180deg));}
+}
+
+/* 2) 戳气球：啪一下 */
+.balloon-item1{pointer-events:auto;cursor:pointer;}
+.balloon-item1.estourado{animation:estoura .36s ease-out forwards;pointer-events:none;}
+@keyframes estoura{
+  0%{transform:scale(1);opacity:1;}
+  42%{transform:scale(1.2);opacity:1;}
+  100%{transform:scale(.35);opacity:0;}
+}
+
+/* 3) 吹蜡烛 */
+.cake::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:9%;
+  width:6px;
+  height:28px;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));
+}
+.cake.apagada .flame{animation:none;opacity:0;transition:opacity .25s ease;}
+.cake.apagada::after{animation:fumaca 1.9s ease-out .08s;}
+@keyframes fumaca{
+  0%{opacity:0;transform:translate(-50%,8px) scaleY(.4);}
+  25%{opacity:.75;}
+  100%{opacity:0;transform:translate(-50%,-36px) scaleY(1.7);}
+}
+
+/* 4) 飘过的歌词可以点，点一下炸成星屑 */
+.letra-fantasma{pointer-events:auto;cursor:pointer;}
+
+/* 5) 封面那句提示 */
+.dica-virar{letter-spacing:.14em;}
+
+@media (prefers-reduced-motion:reduce){
+  .faisca,.cake::after{display:none;}
+  .livro.virando::after{animation:none;}
+}
+
+/* =========================================================
+   第六轮：七页各自的专属效果（入场 + 常驻）
+   全部只靠 .aberto + .ativa 触发，不用改 JS
+   ========================================================= */
+
+/* 相框需要定位，才能套金环 */
+.userImg{position:relative;}
+
+/* ---------------- 1 · 封面：金环转 → 相框弹入 → 名字聚焦 ---------------- */
+.container.aberto .pagina:nth-child(1).ativa .userImg{
+  animation:retrato-entra 1s cubic-bezier(.22,1,.36,1) both;
+}
+.userImg::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  pointer-events:none;
+  background:conic-gradient(from 0deg,
+    rgba(255,214,140,0) 0deg,
+    rgba(255,232,180,.95) 45deg,
+    rgba(255,214,140,0) 120deg,
+    rgba(255,244,214,.9) 200deg,
+    rgba(255,214,140,0) 300deg);
+  -webkit-mask:radial-gradient(circle, transparent 0 61%, #000 63%);
+  mask:radial-gradient(circle, transparent 0 61%, #000 63%);
+  animation:anel-gira 14s linear infinite;
+  opacity:.9;
+}
+.container.aberto .pagina:nth-child(1).ativa .capa-nome{
+  animation:nome-foca .95s ease-out .28s both;
+}
+.container.aberto .pagina:nth-child(1).ativa .folhinha{
+  animation:folha-balanca 4.5s ease-in-out 1.2s infinite alternate;
+}
+@keyframes retrato-entra{
+  0%{opacity:0;transform:scale(.6) rotate(-7deg);}
+  68%{opacity:1;transform:scale(1.05) rotate(1.5deg);}
+  100%{opacity:1;transform:scale(1) rotate(0deg);}
+}
+@keyframes nome-foca{
+  0%{opacity:0;filter:blur(11px) drop-shadow(0 1px 0 rgba(255,255,255,.85));}
+  100%{opacity:1;filter:blur(0) drop-shadow(0 1px 0 rgba(255,255,255,.85));}
+}
+@keyframes folha-balanca{
+  from{transform:rotate(-4deg) translateY(0);}
+  to{transform:rotate(4deg) translateY(-3px);}
+}
+@keyframes anel-gira{to{transform:rotate(360deg);}}
+
+/* ---------------- 2 · 一句话：从模糊里聚焦 + 常驻流光 ---------------- */
+.container.aberto .pagina:nth-child(2).ativa .cartaz{
+  animation:cartaz-foca 1.2s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes cartaz-foca{
+  0%{opacity:0;filter:blur(22px) drop-shadow(0 1px 0 rgba(255,255,255,.85));transform:scale(1.09);}
+  55%{opacity:1;}
+  100%{opacity:1;filter:blur(0) drop-shadow(0 1px 0 rgba(255,255,255,.85));transform:scale(1);}
+}
+.container.aberto .pagina:nth-child(2).ativa .cartaz-sub{
+  animation:sobe-suave .9s ease-out .7s both;
+}
+.container.aberto .pagina:nth-child(2).ativa .ornamento{
+  animation:traco-abre .9s ease-out .35s both;
+}
+@keyframes traco-abre{
+  0%{opacity:0;transform:scaleX(.2);}
+  100%{opacity:.9;transform:scaleX(1);}
+}
+
+/* ---------------- 3 · 长信：从上往下浮现，像在写 ---------------- */
+.container.aberto .pagina:nth-child(3).ativa .carta-txt{
+  animation:carta-escreve 1.6s ease-out both;
+}
+@keyframes carta-escreve{
+  0%{clip-path:inset(0 0 100% 0);opacity:.15;}
+  18%{opacity:1;}
+  100%{clip-path:inset(0 0 0 0);opacity:1;}
+}
+.container.aberto .pagina:nth-child(3).ativa .titulo{
+  animation:titulo-pincel .9s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes titulo-pincel{
+  0%{opacity:0;clip-path:inset(0 100% 0 0);}
+  100%{opacity:1;clip-path:inset(0 0 0 0);}
+}
+
+/* ---------------- 4 · 愿望：一张张弹进来 ---------------- */
+.container.aberto .pagina:nth-child(4).ativa .desejos.grade li{
+  animation:desejo-pop .66s cubic-bezier(.34,1.56,.64,1) both;
+}
+.container.aberto .pagina:nth-child(4).ativa .desejos.grade li:nth-child(1){animation-delay:.06s;}
+.container.aberto .pagina:nth-child(4).ativa .desejos.grade li:nth-child(2){animation-delay:.15s;}
+.container.aberto .pagina:nth-child(4).ativa .desejos.grade li:nth-child(3){animation-delay:.24s;}
+.container.aberto .pagina:nth-child(4).ativa .desejos.grade li:nth-child(4){animation-delay:.33s;}
+@keyframes desejo-pop{
+  0%{opacity:0;transform:scale(.8) rotate(-2.5deg) translateY(12px);}
+  100%{opacity:1;transform:scale(1) rotate(0deg) translateY(0);}
+}
+
+/* ---------------- 5 · 时间线：线自己长下来，圆点逐个亮 ---------------- */
+.container.aberto .pagina:nth-child(5).ativa .linha-tempo::before{
+  transform-origin:top center;
+  animation:linha-cresce 1s ease-out .12s both;
+}
+@keyframes linha-cresce{
+  0%{transform:scaleY(0);opacity:.2;}
+  100%{transform:scaleY(1);opacity:1;}
+}
+.container.aberto .pagina:nth-child(5).ativa .tempo{
+  animation:tempo-entra .6s cubic-bezier(.22,1,.36,1) both;
+}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(1){animation-delay:.3s;}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(2){animation-delay:.46s;}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(3){animation-delay:.62s;}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(4){animation-delay:.78s;}
+@keyframes tempo-entra{
+  0%{opacity:0;transform:translateX(14px);}
+  100%{opacity:1;transform:translateX(0);}
+}
+.container.aberto .pagina:nth-child(5).ativa .ponto-tempo{
+  animation:ponto-pop .55s cubic-bezier(.34,1.56,.64,1) both;
+}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(1) .ponto-tempo{animation-delay:.26s;}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(2) .ponto-tempo{animation-delay:.42s;}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(3) .ponto-tempo{animation-delay:.58s;}
+.container.aberto .pagina:nth-child(5).ativa .tempo:nth-child(4) .ponto-tempo{animation-delay:.74s;}
+@keyframes ponto-pop{
+  0%{opacity:0;transform:translateY(-50%) scale(.2);}
+  70%{opacity:1;transform:translateY(-50%) scale(1.35);}
+  100%{opacity:1;transform:translateY(-50%) scale(1);}
+}
+/* 常驻：圆点慢慢呼吸 */
+.tempo .ponto-tempo{animation:ponto-respira 4.2s ease-in-out infinite;}
+@keyframes ponto-respira{
+  0%,100%{box-shadow:0 0 0 3px rgba(255,247,234,.95),0 0 0 4px rgba(178,132,64,.25);}
+  50%{box-shadow:0 0 0 3px rgba(255,247,234,.95),0 0 0 5px rgba(178,132,64,.45),0 0 12px rgba(230,180,100,.5);}
+}
+.tempo.aceso .ponto-tempo{animation:none;}
+
+/* ---------------- 6 · 竖排诗：一列列写下来，末尾盖章 ---------------- */
+.container.aberto .pagina:nth-child(6).ativa .poema p{
+  animation:poema-escreve .95s ease-out both;
+}
+.container.aberto .pagina:nth-child(6).ativa .poema p:nth-child(1){animation-delay:.08s;}
+.container.aberto .pagina:nth-child(6).ativa .poema p:nth-child(2){animation-delay:.24s;}
+.container.aberto .pagina:nth-child(6).ativa .poema p:nth-child(3){animation-delay:.4s;}
+.container.aberto .pagina:nth-child(6).ativa .poema p:nth-child(4){animation-delay:.56s;}
+@keyframes poema-escreve{
+  0%{opacity:.12;clip-path:inset(0 0 100% 0);}
+  20%{opacity:1;}
+  100%{opacity:1;clip-path:inset(0 0 0 0);}
+}
+.container.aberto .pagina:nth-child(6).ativa .sinete{
+  animation:sinete-carimba .62s cubic-bezier(.3,1.5,.5,1) 1.02s both;
+}
+@keyframes sinete-carimba{
+  0%{opacity:0;transform:rotate(-16deg) scale(2.2);}
+  68%{opacity:1;transform:rotate(-1deg) scale(.93);}
+  100%{opacity:1;transform:rotate(-3deg) scale(1);}
+}
+.container.aberto .pagina:nth-child(6).ativa .poema-data{
+  animation:sobe-suave .8s ease-out 1.35s both;
+}
+
+/* ---------------- 7 · 落款：签名一笔写出来 + 心在跳 ---------------- */
+.container.aberto .pagina:nth-child(7).ativa .assinatura{
+  animation:assinatura-escreve 1.15s ease-out .18s both;
+}
+@keyframes assinatura-escreve{
+  0%{opacity:.25;clip-path:inset(0 100% 0 0);}
+  100%{opacity:1;clip-path:inset(0 0 0 0);}
+}
+.container.aberto .pagina:nth-child(7).ativa .assinatura-label,
+.container.aberto .pagina:nth-child(7).ativa .final,
+.container.aberto .pagina:nth-child(7).ativa .final-sub,
+.container.aberto .pagina:nth-child(7).ativa .ps{
+  animation:sobe-suave .85s ease-out both;
+}
+.container.aberto .pagina:nth-child(7).ativa .assinatura-label{animation-delay:.1s;}
+.container.aberto .pagina:nth-child(7).ativa .final{animation-delay:1.15s;}
+.container.aberto .pagina:nth-child(7).ativa .final-sub{animation-delay:1.32s;}
+.container.aberto .pagina:nth-child(7).ativa .ps{animation-delay:1.5s;}
+.coracao svg{animation:coracao-bate 2.6s ease-in-out infinite;transform-origin:50% 55%;}
+@keyframes coracao-bate{
+  0%,100%{transform:scale(1);}
+  10%{transform:scale(1.13);}
+  20%{transform:scale(1);}
+  30%{transform:scale(1.08);}
+  42%{transform:scale(1);}
+}
+@keyframes sobe-suave{
+  0%{opacity:0;transform:translateY(10px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+
+/* 手机 / 减少动态效果：别太花 */
+@media (max-width:820px){
+  .userImg::after{inset:-6px;}
+  .container.aberto .pagina:nth-child(6).ativa .sinete{animation-delay:.9s;}
+}
+@media (prefers-reduced-motion:reduce){
+  .userImg::after,.coracao svg,.tempo .ponto-tempo,
+  .container.aberto .pagina:nth-child(1).ativa .folhinha{animation:none;}
+}

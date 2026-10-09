@@ -1,0 +1,2246 @@
+/* =========================================================
+   LUXO —— 华丽/炫酷/梦幻/豪华 皮肤层
+   只改"长相"（字体、材质、光、装饰），不动 style.css 里的结构与动效
+   ========================================================= */
+
+/* ---------------- 字体 ---------------- */
+@font-face{font-family:'XingKai';src:url('fonts/xingkai.ttf') format('truetype');font-display:swap;}
+@font-face{font-family:'GaramondPro';src:url('fonts/garamond.ttf') format('truetype');font-display:swap;}
+@font-face{font-family:'PalatinoLin';src:url('fonts/palatino.ttf') format('truetype');font-display:swap;}
+
+:root{
+  --noite-0:#06030d;
+  --noite-1:#140a26;
+  --noite-2:#2b1140;
+  --noite-3:#521f57;
+  --noite-4:#93345a;
+  --noite-5:#d4708c;
+
+  --ouro-1:#fff6dc;
+  --ouro-2:#f2d79b;
+  --ouro-3:#cda45f;
+  --ouro-4:#966b28;
+  --ouro-5:#5e3f13;
+
+  --rosa:#ff9ec4;
+  --malva:#c9a6f2;
+  --menta:#9fe3d0;
+  --gelo:#d6e6ff;
+
+  --papel-1:#fffdf8;
+  --papel-2:#fdf4e4;
+  --papel-3:#f6e7cd;
+  --tinta:#3a2740;
+  --tinta-2:#6d5270;
+
+  /* 覆盖 style.css 里的字体变量 —— 全站排版一次换掉 */
+  --font-cn:"STZhongsong","华文中宋","Songti SC","Source Han Serif SC","Noto Serif CJK SC","SimSun",serif;
+  --font-serif:"STZhongsong","华文中宋","Songti SC","SimSun",serif;
+  --font-kai:"KaiTi","楷体","STKaiti","华文楷体",serif;
+  --font-hand:"XingKai","STXingkai","华文行楷","KaiTi",cursive;
+  --font-display:"GaramondPro","PalatinoLin","Palatino Linotype","Book Antiqua","Georgia",serif;
+  --font-lat:"GaramondPro","PalatinoLin","Palatino Linotype",Georgia,serif;
+  --font-selo:"STLiti","华文隶书","LiSu","STKaiti",serif;
+}
+
+/* ---------------- 夜空（画布垫底） ---------------- */
+body{
+  background:
+    radial-gradient(150% 100% at 50% 108%, rgba(212,112,140,.45), rgba(212,112,140,0) 60%),
+    radial-gradient(90% 70% at 12% -8%, rgba(120,80,220,.35), rgba(120,80,220,0) 60%),
+    linear-gradient(180deg,var(--noite-0) 0%,var(--noite-1) 26%,var(--noite-2) 52%,var(--noite-3) 76%,var(--noite-4) 100%);
+  background-attachment:fixed;
+}
+/* 旧的静态星星 / 暖光交给画布 */
+.container::before,.container::after{display:none;}
+.bokeh{display:none;}
+
+.fx-glow{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+  filter:blur(48px) saturate(1.28);
+  opacity:.72;
+  transform:scale(1.06);
+}
+.fx{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:2;
+  pointer-events:none;
+}
+/* 暗角 + 胶片颗粒 + 一层很薄的光晕 */
+.veu{
+  position:fixed;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+  background-image:
+    radial-gradient(135% 95% at 50% 44%, rgba(0,0,0,0) 42%, rgba(5,2,12,.5) 88%, rgba(5,2,12,.78) 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255,214,150,.06), rgba(255,214,150,0) 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.05'/%3E%3C/svg%3E");
+  background-size:auto,auto,200px 200px;
+}
+
+/* ---------------- 舞台 ---------------- */
+.palco{z-index:6;}
+
+/* 场景大标题：Garamond 全大写 + 烫金流动 */
+.titulo-cena{
+  margin:0 0 clamp(4px,1.2vh,14px);
+  font-family:var(--font-lat);
+  font-weight:400;
+  font-size:clamp(26px,3.4vw,50px);
+  line-height:1.1;
+  letter-spacing:.32em;
+  text-indent:.32em;
+  text-transform:uppercase;
+  background:linear-gradient(102deg,#fff8e2,#f0cf8e 22%,#fffdf2 40%,#cda45f 58%,#ffeec4 74%,#b8893c 100%);
+  background-size:230% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 14px rgba(255,186,120,.4)) drop-shadow(0 1px 0 rgba(255,255,255,.3));
+  animation:ouro-corre 11s ease-in-out infinite;
+}
+@keyframes ouro-corre{
+  0%,100%{background-position:0% 0;}
+  50%{background-position:100% 0;}
+}
+
+/* 顶部金旗：加一层辉光 */
+.image{filter:drop-shadow(0 0 14px rgba(255,206,140,.35));}
+
+/* ---------------- 贺卡：材质 ---------------- */
+.carta{perspective:1800px;}
+.carta::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:132%;
+  height:150%;
+  transform:translate(-50%,-50%) scale(calc(1 + var(--beat,0) * .04));
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+  background:radial-gradient(closest-side,
+    rgba(255,216,155,.3),
+    rgba(255,168,206,.13) 42%,
+    rgba(160,120,255,.08) 62%,
+    rgba(160,120,255,0) 76%);
+  filter:blur(34px);
+  animation:bloom-respira 7.2s ease-in-out infinite;
+}
+@keyframes bloom-respira{
+  0%,100%{opacity:.72;transform:translate(-50%,-50%) scale(1);}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.07);}
+}
+
+/* 信纸本体：象牙纸 + 纸纹 + 烫金双框 + 全息流光 */
+.folha{
+  border-radius:20px;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.05'/%3E%3C/svg%3E"),
+    radial-gradient(130% 90% at 50% -12%, rgba(255,255,255,.95), rgba(255,255,255,0) 62%),
+    radial-gradient(140% 120% at 50% 128%, rgba(206,160,98,.22), rgba(206,160,98,0) 62%),
+    linear-gradient(162deg,var(--papel-1) 0%,var(--papel-2) 48%,var(--papel-3) 100%);
+  background-repeat:repeat,no-repeat,no-repeat,no-repeat;
+  background-size:180px 180px,auto,auto,auto;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.95) inset,
+    0 0 0 1px rgba(255,248,232,.75) inset,
+    0 8px 0 -4px #f2e3ca,
+    0 16px 0 -9px #e7d4b6,
+    0 36px 64px rgba(8,3,18,.55),
+    0 80px 130px rgba(8,3,18,.4);
+}
+/* 烫金细框（用遮罩做渐变描边，跟着圆角走） */
+.folha::before{
+  content:"";
+  position:absolute;
+  inset:13px;
+  border-radius:11px;
+  padding:1px;
+  pointer-events:none;
+  background:linear-gradient(138deg,
+    #fbeec4 0%, #cda45f 22%, #fff8e2 42%, #a97c33 62%, #f4dda6 82%, #8a6320 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  opacity:.95;
+}
+/* 全息流光：跟着指针 + 随节拍轻轻亮一下 */
+.folha::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  pointer-events:none;
+  background:
+    radial-gradient(58% 44% at calc(50% + var(--fx,0) * 42%) calc(50% + var(--fy,0) * 42%),
+      rgba(255,255,255,.55), rgba(255,255,255,0) 62%),
+    conic-gradient(from calc(var(--fx,0) * 120deg) at calc(50% + var(--fx,0) * 18%) calc(50% + var(--fy,0) * 18%),
+      rgba(255,170,214,.34), rgba(255,232,168,.34), rgba(168,255,226,.28),
+      rgba(186,198,255,.32), rgba(255,170,214,.34));
+  mix-blend-mode:soft-light;
+  opacity:calc(.72 + var(--beat,0) * .3);
+}
+/* 四角金色角花 */
+.pagina::after{
+  content:"";
+  position:absolute;
+  inset:13px;
+  border-radius:11px;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-size:54px 54px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E<g transform='rotate(0 32 32)' stroke='%23cda45f' stroke-width='1.05' stroke-linecap='round' fill='none' opacity='.92'><path d='M7 34V13a6 6 0 0 1 6-6h21'/><path d='M13 40c10-2.5 18-10.5 20.5-20.5'/><path d='M19 45c8-3 14.5-9.5 17.5-17.5' opacity='.6'/><path d='M33 15c4.4 0 8 3.6 8 8 0 3.4-2.6 6-6 6-2.4 0-4-1.7-4-3.8 0-1.9 1.4-3.2 3.2-3.2 1.4 0 2.4 1 2.4 2.2'/><circle cx='13' cy='13' r='2.3' fill='%23cda45f' stroke='none'/></g>%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E<g transform='rotate(90 32 32)' stroke='%23cda45f' stroke-width='1.05' stroke-linecap='round' fill='none' opacity='.92'><path d='M7 34V13a6 6 0 0 1 6-6h21'/><path d='M13 40c10-2.5 18-10.5 20.5-20.5'/><path d='M19 45c8-3 14.5-9.5 17.5-17.5' opacity='.6'/><path d='M33 15c4.4 0 8 3.6 8 8 0 3.4-2.6 6-6 6-2.4 0-4-1.7-4-3.8 0-1.9 1.4-3.2 3.2-3.2 1.4 0 2.4 1 2.4 2.2'/><circle cx='13' cy='13' r='2.3' fill='%23cda45f' stroke='none'/></g>%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E<g transform='rotate(180 32 32)' stroke='%23cda45f' stroke-width='1.05' stroke-linecap='round' fill='none' opacity='.92'><path d='M7 34V13a6 6 0 0 1 6-6h21'/><path d='M13 40c10-2.5 18-10.5 20.5-20.5'/><path d='M19 45c8-3 14.5-9.5 17.5-17.5' opacity='.6'/><path d='M33 15c4.4 0 8 3.6 8 8 0 3.4-2.6 6-6 6-2.4 0-4-1.7-4-3.8 0-1.9 1.4-3.2 3.2-3.2 1.4 0 2.4 1 2.4 2.2'/><circle cx='13' cy='13' r='2.3' fill='%23cda45f' stroke='none'/></g>%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E<g transform='rotate(270 32 32)' stroke='%23cda45f' stroke-width='1.05' stroke-linecap='round' fill='none' opacity='.92'><path d='M7 34V13a6 6 0 0 1 6-6h21'/><path d='M13 40c10-2.5 18-10.5 20.5-20.5'/><path d='M19 45c8-3 14.5-9.5 17.5-17.5' opacity='.6'/><path d='M33 15c4.4 0 8 3.6 8 8 0 3.4-2.6 6-6 6-2.4 0-4-1.7-4-3.8 0-1.9 1.4-3.2 3.2-3.2 1.4 0 2.4 1 2.4 2.2'/><circle cx='13' cy='13' r='2.3' fill='%23cda45f' stroke='none'/></g>%3C/svg%3E");
+  background-position:left top,right top,left bottom,right bottom;
+  opacity:.9;
+}
+
+/* 金色角花 */
+.folha{position:relative;}
+
+/* ---------------- 信封 ---------------- */
+.sobre{
+  background:linear-gradient(158deg,#fffdf7 0%,#fdf0da 44%,#f2ddba 100%);
+  border-radius:14px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 0 0 1px rgba(255,246,226,.7) inset,
+    0 28px 60px rgba(8,3,18,.55),
+    0 0 60px rgba(255,196,130,.22);
+}
+.sobre-aba{
+  background:linear-gradient(178deg,#fff6e6,#f3ddb8 70%,#e9cfa2);
+  box-shadow:0 3px 10px rgba(120,80,40,.18);
+}
+.sobre::after{
+  inset:9px;
+  border:1px solid transparent;
+  border-radius:9px;
+  background:linear-gradient(140deg,#f7e6b8,#cda45f 30%,#fff6dc 52%,#a97c33 78%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite:exclude;
+}
+.sobre-fita{
+  position:absolute;
+  left:0;
+  right:0;
+  top:62%;
+  height:16px;
+  z-index:2;
+  background:linear-gradient(180deg,rgba(232,60,110,.85),rgba(150,24,66,.9));
+  box-shadow:0 2px 8px rgba(120,10,50,.35),0 1px 0 rgba(255,255,255,.25) inset;
+}
+.sobre-selo{
+  border-radius:52% 48% 47% 53% / 50% 52% 48% 50%;
+  background:
+    radial-gradient(circle at 32% 26%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%),
+    radial-gradient(circle at 50% 58%,#f9a8c6,#cf2e5f 62%,#7d1030);
+  box-shadow:
+    0 8px 22px rgba(120,10,45,.5),
+    0 0 0 3px rgba(255,255,255,.25) inset,
+    0 -4px 12px rgba(90,6,32,.45) inset,
+    0 2px 6px rgba(255,255,255,.3) inset;
+  font-family:var(--font-selo);
+  letter-spacing:0;
+}
+.sobre-nome{
+  font-family:var(--font-hand);
+  color:#8a5a72;
+  text-shadow:0 1px 0 rgba(255,255,255,.9);
+}
+.sobre-dica{color:#b08b9c;}
+
+/* ---------------- 页面内的排版 ---------------- */
+.titulo{
+  font-family:var(--font-display);
+  font-weight:400;
+  letter-spacing:.14em;
+  text-indent:.14em;
+  background:linear-gradient(104deg,#7d5716,#d9b061 24%,#fbefcd 44%,#a97c33 66%,#dcbb74 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.9));
+  animation:ouro-corre 13s ease-in-out infinite;
+}
+.capa-sub{font-family:var(--font-kai);letter-spacing:.42em;text-indent:.42em;color:#8a6f86;}
+.etiqueta{font-family:var(--font-kai);color:rgba(120,92,116,.85);}
+.capa-verso{
+  font-family:var(--font-kai);
+  font-size:clamp(14.5px,1.55vw,18.5px);
+  letter-spacing:.14em;
+  line-height:2.15;
+  color:#4a3348;
+}
+.carta-txt{
+  font-family:var(--font-kai);
+  font-size:clamp(14.5px,1.5vw,17.5px);
+  line-height:2.05;
+  letter-spacing:.06em;
+  color:#402c46;
+}
+.carta-txt .realce{color:#b0305a;}
+.texto{font-family:var(--font-serif);}
+.final,.final-sub{font-family:var(--font-kai);}
+.ps{font-family:var(--font-kai);}
+
+/* 相框：三层金环 */
+.userImg{
+  background:conic-gradient(from 200deg,#fff6dc,#cda45f 22%,#fff8e6 42%,#a97c33 62%,#f4dda6 82%,#fff6dc);
+  box-shadow:
+    0 0 0 1px rgba(150,110,50,.55),
+    0 0 0 7px rgba(255,255,255,.7),
+    0 0 0 8px rgba(150,110,50,.35),
+    0 18px 38px rgba(120,50,90,.35),
+    0 0 40px rgba(255,200,140,.3);
+}
+.capa-nome{
+  font-family:var(--font-hand);
+  background:linear-gradient(118deg,#8e1f42,#e0718f 38%,#b0305a 62%,#e59ab0);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.85));
+}
+/* 印章字 */
+.selo-char{
+  font-family:var(--font-selo);
+  color:#a82a4a;
+  background:
+    radial-gradient(circle at 34% 28%,#fffdf6,#fdf0d8 55%,#f3e0bd);
+  box-shadow:
+    0 0 0 1px rgba(180,132,64,.5) inset,
+    0 0 0 8px rgba(210,168,100,.14),
+    0 0 0 9px rgba(180,132,64,.35),
+    0 16px 30px rgba(150,100,60,.22);
+}
+.sinete{
+  font-family:var(--font-selo);
+  background:linear-gradient(150deg,#d34a6c,#8e1030);
+  box-shadow:0 6px 16px rgba(120,10,40,.4),0 0 0 1px rgba(255,255,255,.25) inset;
+}
+.cartaz{
+  font-family:var(--font-display);
+  font-weight:400;
+  background:linear-gradient(104deg,#7d5716,#d9b061 20%,#fdf4da 40%,#a97c33 62%,#e3c47f 84%,#8a6320);
+  background-size:210% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(255,255,255,.75));
+  animation:ouro-corre 12s ease-in-out infinite;
+}
+.cartaz-sub{font-family:var(--font-kai);color:#7a5f76;letter-spacing:.24em;}
+.poema p{font-family:var(--font-kai);color:#3f2b45;}
+.poema-data{font-family:var(--font-kai);color:rgba(122,92,116,.8);letter-spacing:.34em;}
+.assinatura{
+  font-family:var(--font-hand);
+  background:linear-gradient(118deg,#8e1f42,#e0718f 42%,#a82a4a);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+.assinatura-label{font-family:var(--font-lat);letter-spacing:.28em;font-size:clamp(12px,1.25vw,15px);color:#8a6f86;}
+.ornamento{color:var(--ouro-3);opacity:1;filter:drop-shadow(0 1px 0 rgba(255,255,255,.8));}
+
+/* 愿望卡 / 时间线：更精致 */
+.desejos li{
+  background:linear-gradient(124deg,rgba(255,255,255,.92),rgba(253,242,224,.7));
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.95) inset,
+    0 0 0 1px rgba(206,168,110,.22),
+    0 10px 22px rgba(150,110,80,.12);
+}
+.desejos li.aceso{
+  background:linear-gradient(124deg,rgba(255,248,226,.98),rgba(255,228,186,.88));
+  box-shadow:
+    0 0 0 1px rgba(200,150,70,.5) inset,
+    0 0 30px rgba(255,200,110,.5),
+    0 12px 26px rgba(150,110,80,.16);
+}
+.ico{
+  color:var(--ouro-4);
+  background:radial-gradient(circle at 34% 28%,#fffdf4,#f6e3bd 60%,#ecd3a4);
+  box-shadow:0 2px 8px rgba(180,140,80,.3),0 0 0 1px rgba(255,255,255,.8) inset;
+}
+.tempo p{font-family:var(--font-kai);color:#402c46;}
+.ponto-tempo{
+  background:radial-gradient(circle at 34% 28%,#fffdf4,#e8cc96);
+  box-shadow:0 0 0 3px rgba(255,250,238,.95),0 0 0 4px rgba(180,132,64,.4);
+}
+.linha-tempo::before{
+  background:linear-gradient(180deg,rgba(180,132,64,0),rgba(214,168,96,.75),rgba(180,132,64,0));
+}
+.dica-acende{font-family:var(--font-kai);color:rgba(122,90,114,.75);}
+
+/* 翻页控件：玻璃 + 金环 */
+.nav-seta{
+  color:var(--ouro-4);
+  border-color:rgba(198,158,96,.55);
+  background:linear-gradient(160deg,rgba(255,252,244,.96),rgba(250,236,210,.92));
+  box-shadow:
+    0 6px 18px rgba(70,30,50,.28),
+    0 0 0 1px rgba(255,255,255,.8) inset,
+    0 0 22px rgba(255,200,140,.25);
+}
+.ponto{
+  border-color:rgba(198,158,96,.6);
+  background:rgba(255,246,226,.25);
+}
+.ponto.ativo{
+  background:linear-gradient(120deg,#e8c476,#fff6dc 50%,#cda45f);
+  box-shadow:0 0 14px rgba(255,200,120,.75);
+}
+
+/* ---------------- 歌词 ---------------- */
+.letra-linha{
+  font-family:var(--font-kai);
+  color:#fffaf1;
+  text-shadow:
+    0 1px 4px rgba(40,8,44,.95),
+    0 2px 18px rgba(40,8,44,.85),
+    0 0 40px rgba(255,206,140,.5);
+}
+.letra-fantasma{
+  color:rgba(255,252,246,.98);
+  text-shadow:
+    0 0 90px rgba(255,214,150,.6),
+    0 0 34px rgba(150,90,180,.6),
+    0 2px 6px rgba(40,8,44,.4);
+  font-family:var(--font-serif);
+}
+.letra-fantasma.mostra::before,.letra-fantasma.mostra::after{opacity:.5;}
+
+/* ---------------- 蜡烛 ---------------- */
+.vela{
+  appearance:none;
+  position:absolute;
+  left:clamp(14px,2.6vw,40px);
+  bottom:clamp(8px,1.6vh,22px);
+  width:clamp(46px,5vw,64px);
+  padding:0;
+  border:0;
+  background:none;
+  cursor:pointer;
+  z-index:2;
+  filter:drop-shadow(0 0 22px rgba(255,190,110,.45)) drop-shadow(0 10px 18px rgba(30,8,40,.5));
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.vela svg{display:block;width:100%;height:auto;}
+.vela:hover{transform:translateY(-6px) scale(1.05);}
+.vela:focus-visible{outline:2px solid var(--ouro-2);outline-offset:8px;border-radius:50%;}
+.vela .halo{animation:halo-respira 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 60%;}
+@keyframes halo-respira{0%,100%{opacity:.4;transform:scale(.96);}50%{opacity:.72;transform:scale(1.08);}}
+.vela.apagada .flame{animation:none;opacity:0;transition:opacity .22s ease;}
+.vela.apagada .halo{opacity:0;transition:opacity .3s ease;}
+.vela::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:6%;
+  width:7px;
+  height:30px;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,0));
+}
+.vela.apagada::after{animation:fumaca 2s ease-out .06s;}
+@keyframes fumaca{
+  0%{opacity:0;transform:translate(-50%,10px) scaleY(.4);}
+  22%{opacity:.8;}
+  100%{opacity:0;transform:translate(-50%,-40px) scaleY(1.8);}
+}
+
+/* ---------------- 音乐按钮 ---------------- */
+.musica-btn{
+  border:1px solid rgba(240,208,145,.45);
+  background:linear-gradient(150deg,rgba(38,16,52,.6),rgba(20,8,32,.5));
+  backdrop-filter:blur(10px) saturate(1.2);
+  -webkit-backdrop-filter:blur(10px) saturate(1.2);
+  box-shadow:
+    0 10px 28px rgba(8,3,18,.5),
+    0 0 0 1px rgba(255,240,200,.12) inset,
+    0 0 26px rgba(255,190,120,.18);
+  color:#fdf6e6;
+}
+.musica-btn:hover{background:linear-gradient(150deg,rgba(60,28,74,.7),rgba(30,12,44,.6));border-color:rgba(255,232,180,.75);}
+.equalizador i{background:linear-gradient(180deg,#fff6dc,#e0b062);}
+.musica-nome{color:rgba(255,240,214,.7);font-family:var(--font-kai);letter-spacing:.2em;}
+
+/* ---------------- 星屑 / 彩纸 ---------------- */
+.faisca{
+  width:11px;
+  height:11px;
+  background:radial-gradient(circle at 40% 35%,#fffdf4,#ffd479 52%,rgba(255,212,121,0));
+  filter:drop-shadow(0 0 6px rgba(255,206,120,.9));
+}
+.confetti{
+  border-radius:2px;
+  box-shadow:0 0 8px rgba(255,220,160,.5);
+}
+.coracao-f{color:#ffb3cd;text-shadow:0 0 16px rgba(255,140,190,.9);}
+
+/* ---------------- 响应式 ---------------- */
+@media (max-width:820px){
+  .fx-glow{filter:blur(30px) saturate(1.3);opacity:.75;}
+  .veu{background-size:auto,auto,160px 160px;}
+  .titulo-cena{font-size:clamp(22px,6.4vw,32px);letter-spacing:.24em;text-indent:.24em;}
+  .vela{display:none;}
+  .nav-seta{bottom:clamp(6px,1vh,12px);}
+  .nav-next{right:10px;}
+  .nav-prev{left:10px;}
+  .folha::before{inset:10px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .fx-glow,.fx{display:none;}
+  .titulo-cena,.titulo,.cartaz{animation:none;}
+  .carta::before{animation:none;}
+}
+
+/* =========================================================
+   生成素材接入（Meowa 生成，见 assets/）
+   ========================================================= */
+
+/* 1 · 背景：金色极光夜空 */
+body{
+  background-image:
+    radial-gradient(150% 100% at 50% 106%, rgba(214,116,142,.26), rgba(214,116,142,0) 62%),
+    linear-gradient(180deg, rgba(6,3,13,.3) 0%, rgba(6,3,13,.1) 46%, rgba(6,3,13,.46) 100%),
+    url("assets/ceu.jpg");
+  background-size:auto,auto,cover;
+  background-position:center,center,center;
+  background-repeat:no-repeat,no-repeat,no-repeat;
+  background-attachment:fixed,fixed,fixed;
+}
+/* 画布极光压成"叠加光"，别盖住大图 */
+.fx-glow{opacity:.5;mix-blend-mode:screen;}
+
+/* 2 · 纸：真纸纹（正片叠底在信纸上） */
+.pagina::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  pointer-events:none;
+  background-image:url("assets/papel.png");
+  background-size:190px 190px;
+  mix-blend-mode:multiply;
+  opacity:.5;
+}
+
+/* 3 · 四角：真金角花（替换手绘 SVG） */
+.pagina::after{
+  inset:10px;
+  background-image:url("assets/canto-tl.png"),url("assets/canto-tr.png"),url("assets/canto-bl.png"),url("assets/canto-br.png");
+  background-size:clamp(74px,8.4vw,128px) auto;
+  background-position:left top,right top,left bottom,right bottom;
+  opacity:.95;
+  filter:drop-shadow(0 1px 1px rgba(120,80,20,.22));
+}
+
+/* 4 · 缠枝金纹替换手绘分隔 */
+.ornamento{
+  width:clamp(180px,22vw,300px);
+  aspect-ratio:1500/146;
+  background-image:url("assets/divisor.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  color:transparent;
+  filter:none;
+}
+.ornamento svg{display:none;}
+
+/* 5 · 金箔进字：纹理工 + 原来的渐变调子 */
+.titulo,.cartaz{
+  background-image:url("assets/ouro.png"),linear-gradient(104deg,#7d5716,#d9b061 24%,#fbefcd 44%,#a97c33 66%,#dcbb74 100%);
+  background-size:170px 170px,210% 100%;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+  animation:foil-drift 26s linear infinite;
+}
+.capa-nome,.assinatura{
+  background-image:url("assets/ouro.png"),linear-gradient(118deg,#8e1f42,#e0718f 38%,#b0305a 62%,#e59ab0);
+  background-size:150px 150px,180% 100%;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+  animation:foil-drift 22s linear infinite;
+}
+.titulo-cena{
+  background-image:url("assets/ouro.png"),linear-gradient(102deg,#fff8e2,#f0cf8e 22%,#fffdf2 40%,#cda45f 58%,#ffeec4 74%,#b8893c 100%);
+  background-size:150px 150px,230% 100%;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+  animation:foil-drift 30s linear infinite;
+}
+@keyframes foil-drift{
+  from{background-position:0 0,0% 0;}
+  to{background-position:170px 0,0% 0;}
+}
+
+/* 6 · 信纸金框也用金箔 */
+.folha::before{
+  background-image:url("assets/ouro.png"),linear-gradient(138deg,#fbeec4 0%,#cda45f 22%,#fff8e2 42%,#a97c33 62%,#f4dda6 82%,#8a6320 100%);
+  background-size:120px 120px,auto;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+}
+
+/* 7 · 信封上的蜡封换成生成的梅花金印 */
+.sobre-selo{
+  width:clamp(62px,7.6vw,88px);
+  background-color:transparent;
+  background-image:url("assets/selo-ouro.png");
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+  border-radius:0;
+  box-shadow:none;
+  color:transparent;
+  text-shadow:none;
+  filter:drop-shadow(0 7px 16px rgba(80,44,6,.5)) drop-shadow(0 1px 0 rgba(255,240,200,.45));
+}
+.sobre-selo::after{display:none;}
+
+@media (max-width:820px){
+  .pagina::after{background-size:clamp(58px,15vw,84px) auto;}
+  .pagina::before{background-size:150px 150px;}
+  .ornamento{width:clamp(150px,44vw,220px);}
+}
+
+/* 8 · 头像外面套生成的金相框（替换原来的旋转金环） */
+.userImg::after{display:none;}
+.userImg::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:134%;
+  height:134%;
+  transform:translate(-50%,-50%);
+  background-image:url("assets/moldura.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  pointer-events:none;
+  filter:drop-shadow(0 6px 14px rgba(90,50,10,.35));
+}
+/* 9 · 蜡封再大一点 */
+.sobre-selo{width:clamp(72px,8.8vw,104px);top:56%;}
+/* 10 · 相框变大后，给下面的名字留出空间 */
+.col-esq{gap:clamp(16px,2.6vh,26px);}
+.container.aberto .pagina:nth-child(1).ativa .capa-nome{margin-top:6px;}
+.capa-verso{font-size:clamp(15px,1.6vw,19px);}
+
+/* =========================================================
+   第四轮：序曲 / 自动导览 / 尾声 / 更闪的效果
+   ========================================================= */
+
+/* ---------- 序曲：一层层亮起来（点开就跳过） ---------- */
+.image{opacity:0;transform:translateY(-16px);transition:opacity 1.6s ease,transform 1.6s ease;}
+.container.t1 .image{opacity:.92;transform:none;}
+
+.vela{opacity:0;transform:translateY(16px) scale(.9);transition:opacity 1.4s ease,transform 1.5s cubic-bezier(.22,1,.36,1);}
+.container.t2 .vela{opacity:1;transform:none;}
+
+.sobre{animation:none;opacity:0;filter:blur(16px);transform:translateY(28px) scale(.93);
+  transition:opacity 1.7s ease,filter 1.7s ease,transform 1.8s cubic-bezier(.22,1,.36,1);}
+.container.t3:not(.aberto) .sobre{opacity:1;filter:blur(0);transform:none;}
+
+.titulo-cena{opacity:0;letter-spacing:.64em;transition:opacity 1.9s ease,letter-spacing 1.9s ease;}
+.container.t4 .titulo-cena{opacity:1;letter-spacing:.32em;}
+
+/* ---------- 自动导览：卡下一条进度线 ---------- */
+.guia{
+  width:min(720px,82vw);
+  height:2px;
+  border-radius:2px;
+  margin-top:2px;
+  background:rgba(255,240,210,.14);
+  overflow:hidden;
+  opacity:0;
+  transition:opacity .6s ease;
+}
+.container.aberto .guia{opacity:1;}
+.guia i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,rgba(255,220,150,0),#f0cf8e 45%,#fff6dc);
+  box-shadow:0 0 14px rgba(255,200,120,.9);
+  transition:width linear;
+}
+.guia.pausada i{opacity:.3;}
+.container.final .guia{opacity:0;}
+
+.guia-btn{
+  position:fixed;
+  left:clamp(14px,2.6vw,40px);
+  top:clamp(84px,11vh,124px);
+  z-index:7;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:999px;
+  font-family:inherit;
+  font-size:11.5px;
+  letter-spacing:.14em;
+  color:rgba(255,244,222,.88);
+  border:1px solid rgba(240,208,145,.35);
+  background:linear-gradient(150deg,rgba(34,14,46,.55),rgba(18,7,28,.45));
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  cursor:pointer;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .6s ease,background .25s ease,border-color .25s ease;
+}
+.container.aberto .guia-btn{opacity:1;pointer-events:auto;}
+.container.final .guia-btn{opacity:0;pointer-events:none;}
+.guia-btn:hover{background:linear-gradient(150deg,rgba(60,28,74,.7),rgba(30,12,44,.6));border-color:rgba(255,232,180,.7);}
+.guia-ponto{width:7px;height:7px;border-radius:50%;background:#f0cf8e;box-shadow:0 0 10px rgba(255,200,120,.95);transition:background .3s,box-shadow .3s;}
+.guia-btn[aria-pressed="false"] .guia-ponto{background:rgba(255,240,220,.3);box-shadow:none;}
+
+/* ---------- 翻页时全场扫过一道光 ---------- */
+.cena-flash{
+  position:fixed;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  opacity:0;
+  background-image:linear-gradient(100deg,transparent 38%,rgba(255,238,196,.26) 50%,transparent 62%);
+  background-size:280% 100%;
+  background-repeat:no-repeat;
+}
+.cena-flash.on{animation:cena-varre .85s ease-out;}
+@keyframes cena-varre{
+  0%{opacity:1;background-position:170% 0;}
+  100%{opacity:0;background-position:-70% 0;}
+}
+
+/* ---------- 尾声 ---------- */
+.finale{
+  position:fixed;
+  inset:0;
+  z-index:40;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(8px,1.6vh,18px);
+  text-align:center;
+  padding:24px;
+  background:radial-gradient(120% 90% at 50% 44%,rgba(34,12,48,.6),rgba(6,2,12,.93));
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity 1.5s ease,visibility 0s linear 1.5s;
+}
+.container.final .finale{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transition:opacity 1.6s ease .35s,visibility 0s;
+}
+.container.final .livro,
+.container.final .sobre,
+.container.final .titulo-cena,
+.container.final .vela{
+  opacity:0 !important;
+  transform:translateY(-22px) scale(.93) !important;
+  transition:opacity 1.1s ease,transform 1.3s ease;
+  pointer-events:none;
+}
+.finale > *{opacity:0;transform:translateY(14px);transition:opacity 1.2s ease,transform 1.3s cubic-bezier(.22,1,.36,1);}
+.container.final .finale > *{opacity:1;transform:none;}
+.container.final .finale > *:nth-child(1){transition-delay:.6s;}
+.container.final .finale > *:nth-child(2){transition-delay:.95s;}
+.container.final .finale > *:nth-child(3){transition-delay:1.3s;}
+.container.final .finale > *:nth-child(4){transition-delay:1.9s;}
+
+.finale-sub{
+  margin:0;
+  font-family:var(--font-kai);
+  font-size:clamp(12px,1.4vw,16px);
+  letter-spacing:.5em;
+  text-indent:.5em;
+  color:rgba(255,240,214,.8);
+}
+.finale-nome{
+  margin:0;
+  font-family:var(--font-hand);
+  font-size:clamp(42px,7.4vw,104px);
+  line-height:1.15;
+  background-image:url("assets/ouro.png"),linear-gradient(102deg,#fff8e2,#f0cf8e 24%,#fffdf2 44%,#cda45f 64%,#ffeec4 84%,#b8893c);
+  background-size:160px 160px,220% 100%;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 4px 24px rgba(255,186,120,.5));
+  animation:foil-drift 24s linear infinite;
+}
+.finale-linha{
+  margin:0;
+  font-family:var(--font-kai);
+  font-size:clamp(15px,1.9vw,23px);
+  letter-spacing:.28em;
+  text-indent:.28em;
+  color:rgba(255,246,228,.92);
+  text-shadow:0 2px 20px rgba(40,10,44,.9),0 0 40px rgba(255,206,140,.35);
+}
+.finale-btn{
+  margin-top:clamp(10px,2.4vh,26px);
+  padding:11px 26px;
+  border-radius:999px;
+  font-family:inherit;
+  font-size:13px;
+  letter-spacing:.22em;
+  text-indent:.22em;
+  color:#f7edd6;
+  border:1px solid rgba(240,208,145,.5);
+  background:linear-gradient(150deg,rgba(58,26,72,.6),rgba(26,10,38,.5));
+  cursor:pointer;
+  transition:background .25s ease,border-color .25s ease,transform .25s ease;
+}
+.finale-btn:hover{background:linear-gradient(150deg,rgba(90,44,104,.75),rgba(40,16,54,.6));border-color:rgba(255,236,190,.85);transform:translateY(-2px);}
+.finale-btn:focus-visible{outline:2px solid var(--ouro-2);outline-offset:4px;}
+
+@media (max-width:820px){
+  .guia{width:86vw;}
+  .guia-btn{top:auto;bottom:clamp(58px,8vh,78px);left:12px;font-size:11px;padding:6px 12px;}
+  .finale-nome{font-size:clamp(38px,13vw,64px);}
+  .finale-linha{letter-spacing:.18em;text-indent:.18em;}
+}
+@media (prefers-reduced-motion:reduce){
+  .cena-flash{display:none;}
+  .image,.vela,.sobre,.titulo-cena{opacity:1 !important;filter:none !important;transform:none !important;}
+}
+
+
+/* =========================================================
+   第五轮：每页可互动元素的样式
+   ========================================================= */
+
+/* 通用：点击脉冲 */
+.pulso{animation:pulso-anel .85s ease-out;}
+@keyframes pulso-anel{
+  0%{box-shadow:0 0 0 0 rgba(255,214,150,.75),0 0 40px rgba(255,200,130,.6);}
+  100%{box-shadow:0 0 0 30px rgba(255,214,150,0),0 0 60px rgba(255,200,130,0);}
+}
+
+/* 通用：金字（点过之后） */
+.capa-verso.ouro,.final.ouro,.cartaz-sub.ouro{
+  background-image:url("assets/ouro.png"),linear-gradient(102deg,#8a6320,#e8c476 26%,#fff6dc 48%,#b8893c 72%,#e6c98a);
+  background-size:150px 150px,200% 100%;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:foil-drift 20s linear infinite;
+  filter:drop-shadow(0 0 14px rgba(255,200,120,.5));
+}
+
+/* 1 · 封面 */
+.userImg{cursor:pointer;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.userImg:hover{transform:scale(1.04);}
+.capa-verso{cursor:pointer;transition:color .45s ease,filter .45s ease;}
+
+/* 2 · 大字：连点三下 */
+.cartaz{cursor:pointer;transition:transform .35s cubic-bezier(.34,1.56,.64,1),filter .35s ease;}
+.cartaz.carga1{transform:scale(1.03);filter:drop-shadow(0 0 26px rgba(255,206,130,.6)) drop-shadow(0 2px 0 rgba(255,255,255,.75));}
+.cartaz.carga2{transform:scale(1.06);filter:drop-shadow(0 0 40px rgba(255,206,130,.85)) drop-shadow(0 2px 0 rgba(255,255,255,.75));}
+.cartaz.florido{animation:florir 2.4s cubic-bezier(.22,1,.36,1);}
+@keyframes florir{
+  0%{transform:scale(1.06);filter:drop-shadow(0 0 40px rgba(255,206,130,.9));}
+  30%{transform:scale(1.12) rotate(-.6deg);filter:drop-shadow(0 0 70px rgba(255,226,170,1));}
+  100%{transform:scale(1);filter:drop-shadow(0 2px 0 rgba(255,255,255,.75));}
+}
+
+/* 3 · 长信：段落划金线 + 抽出的便条 */
+.carta-txt p{margin:0 0 .7em;position:relative;cursor:pointer;transition:color .35s ease;}
+.carta-txt p:last-child{margin-bottom:0;}
+.carta-txt p::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:.08em;
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,rgba(240,208,145,0),#e8c476 18%,#fff6dc 55%,#cda45f 85%,rgba(240,208,145,0));
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .6s cubic-bezier(.22,1,.36,1);
+}
+.carta-txt p.marcado::after{transform:scaleX(1);}
+.carta-txt p.marcado{color:#8a5a18;}
+
+.bilhete{
+  position:absolute;
+  right:clamp(18px,3vw,44px);
+  bottom:clamp(30px,6vh,64px);
+  width:min(300px,64%);
+  padding:14px 18px 16px;
+  border-radius:10px;
+  text-align:left;
+  color:#4a3348;
+  background:linear-gradient(160deg,#fffdf3,#fdf1d8);
+  box-shadow:0 14px 30px rgba(90,50,30,.28),0 0 0 1px rgba(180,140,80,.35) inset;
+  transform:translateY(26px) rotate(-3.5deg) scale(.9);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1);
+  z-index:3;
+}
+.bilhete::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-9px;
+  width:56px;
+  height:18px;
+  transform:translateX(-50%) rotate(-2deg);
+  background:linear-gradient(180deg,rgba(232,196,118,.55),rgba(232,196,118,.3));
+  box-shadow:0 1px 3px rgba(120,80,20,.2);
+}
+.bilhete i{
+  display:block;
+  font-style:normal;
+  font-family:var(--font-kai);
+  font-size:11px;
+  letter-spacing:.34em;
+  color:rgba(140,100,70,.7);
+  margin-bottom:6px;
+}
+.bilhete span{
+  font-family:var(--font-kai);
+  font-size:clamp(13px,1.35vw,15.5px);
+  line-height:1.9;
+  letter-spacing:.05em;
+}
+.folha.nota .bilhete{opacity:1;transform:translateY(0) rotate(-2deg) scale(1);pointer-events:auto;}
+
+/* 4 / 5 · 点齐奖励 */
+.premio{
+  margin:2px 0 0;
+  font-family:var(--font-kai);
+  font-size:clamp(12px,1.3vw,14.5px);
+  letter-spacing:.18em;
+  color:#a97c33;
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1);
+}
+.premio.mostra{opacity:1;transform:none;text-shadow:0 0 16px rgba(255,200,120,.6);}
+
+/* 6 · 竖排诗：一列列点亮 */
+.poema p{cursor:pointer;transition:color .4s ease,text-shadow .4s ease,transform .4s ease;transform-origin:top center;}
+.poema p:hover{color:#6b4a3a;}
+.poema p.aceso{color:#a9761f;text-shadow:0 0 20px rgba(255,200,120,.85),0 0 40px rgba(255,190,110,.5);}
+.sinete{cursor:pointer;}
+.sinete.carimba{animation:sinete-carimba .62s cubic-bezier(.3,1.5,.5,1) both;}
+
+/* 7 · 落款 */
+.assinatura{cursor:pointer;}
+.assinatura.reescreve{animation:assinatura-escreve 1.15s ease-out both;}
+.final{cursor:pointer;transition:color .4s ease;}
+.final.ouro{color:transparent;}
+
+/* =========================================================
+   第八页 · 岁岁（年龄切换）
+   ========================================================= */
+.folha.idade{
+  align-items:center;
+  text-align:center;
+  gap:clamp(6px,1.4vh,14px);
+  overflow:visible;
+}
+.idade-etiqueta{
+  margin:0;
+  font-family:var(--font-kai);
+  font-size:clamp(12px,1.4vw,16px);
+  letter-spacing:.52em;
+  text-indent:.52em;
+  color:rgba(150,110,70,.85);
+}
+.idade-palco{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:.06em;
+  perspective:700px;
+  margin:clamp(-2px,-.4vh,0) 0;
+}
+.idade-num{
+  font-family:var(--font-serif);
+  font-size:clamp(84px,13.5vw,168px);
+  font-weight:400;
+  line-height:1;
+  letter-spacing:.01em;
+  background-image:url("assets/ouro.png"),linear-gradient(168deg,#8a6320,#e8c476 22%,#fff8e2 44%,#cda45f 64%,#f0d79a 84%,#96690f);
+  background-size:150px 150px,220% 100%;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 0 rgba(255,255,255,.65)) drop-shadow(0 10px 26px rgba(140,90,20,.35));
+  animation:foil-drift 26s linear infinite;
+  cursor:pointer;
+  transform-origin:50% 60%;
+  display:inline-block;
+}
+.idade-num.vira{animation:idade-vira .62s cubic-bezier(.28,1.3,.42,1), foil-drift 26s linear infinite;}
+@keyframes idade-vira{
+  0%{transform:translateY(-.3em) rotateX(74deg) scale(.82);opacity:0;filter:blur(2px);}
+  55%{opacity:1;filter:blur(0);}
+  100%{transform:none;opacity:1;}
+}
+.idade-sufixo{
+  font-family:var(--font-kai);
+  font-size:clamp(18px,2.3vw,30px);
+  color:#a97c33;
+  letter-spacing:.06em;
+}
+.idade-data{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:clamp(15px,1.85vw,23px);
+  letter-spacing:.22em;
+  text-indent:.22em;
+  color:#8a6a3c;
+}
+.idade-frase{
+  margin:2px 0 0;
+  min-height:1.6em;
+  font-family:var(--font-kai);
+  font-size:clamp(13.5px,1.55vw,18px);
+  letter-spacing:.14em;
+  color:#5c4636;
+  transition:opacity .35s ease,transform .35s ease;
+}
+.idade-frase.troca{opacity:0;transform:translateY(5px);}
+
+/* 金色年份滑杆 */
+.idade-barra{
+  width:min(560px,84%);
+  margin-top:clamp(6px,1.6vh,18px);
+}
+.idade-slider{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:22px;
+  margin:0;
+  background:transparent;
+  cursor:grab;
+  display:block;
+}
+.idade-slider:active{cursor:grabbing;}
+.idade-slider::-webkit-slider-runnable-track{
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,rgba(240,208,145,.3),#e8c476 45%,#fff6dc 78%,#cda45f);
+  box-shadow:0 0 12px rgba(255,200,120,.5);
+}
+.idade-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:20px;
+  height:20px;
+  margin-top:-9px;
+  border-radius:50%;
+  border:none;
+  background:radial-gradient(circle at 34% 30%,#fffdf3,#f0d79a 42%,#c08f34 78%,#8a6320);
+  box-shadow:0 3px 10px rgba(90,50,10,.45),0 0 0 3px rgba(255,240,210,.4),0 0 22px rgba(255,200,120,.75);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.idade-slider:hover::-webkit-slider-thumb,
+.idade-slider:focus-visible::-webkit-slider-thumb{transform:scale(1.12);box-shadow:0 3px 12px rgba(90,50,10,.5),0 0 0 4px rgba(255,240,210,.5),0 0 30px rgba(255,200,120,.9);}
+.idade-slider::-moz-range-track{
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,rgba(240,208,145,.3),#e8c476 45%,#fff6dc 78%,#cda45f);
+  box-shadow:0 0 12px rgba(255,200,120,.5);
+}
+.idade-slider::-moz-range-thumb{
+  width:18px;
+  height:18px;
+  border:none;
+  border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#fffdf3,#f0d79a 42%,#c08f34 78%,#8a6320);
+  box-shadow:0 3px 10px rgba(90,50,10,.45),0 0 0 3px rgba(255,240,210,.4);
+}
+.idade-slider:focus{outline:none;}
+.idade-slider:focus-visible{outline:2px solid var(--ouro-2);outline-offset:6px;border-radius:4px;}
+.idade-marcas{
+  display:flex;
+  justify-content:space-between;
+  margin-top:2px;
+  font-family:var(--font-serif);
+  font-size:clamp(10px,1.15vw,12.5px);
+  letter-spacing:.1em;
+  color:rgba(150,110,70,.62);
+}
+.idade-dica{
+  margin:clamp(4px,1.2vh,12px) 0 0;
+  font-family:var(--font-kai);
+  font-size:clamp(11px,1.25vw,13.5px);
+  letter-spacing:.16em;
+  color:rgba(150,110,70,.6);
+}
+.idade-marco .idade-num{filter:drop-shadow(0 0 26px rgba(255,206,130,.9)) drop-shadow(0 3px 0 rgba(255,255,255,.65));}
+
+@media (max-width:820px){
+  .idade-barra{width:92%;}
+  .idade-marcas span:nth-child(2),
+  .idade-marcas span:nth-child(4){display:none;}
+}
+
+/* =========================================================
+   第九 ~ 十二页
+   ========================================================= */
+
+/* ---------- 9 · 数字里的你 ---------- */
+.folha.numeros{align-items:center;text-align:center;gap:clamp(6px,1.4vh,14px);}
+.numeros-grade{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(8px,1.5vw,18px);
+  width:100%;
+  max-width:660px;
+  margin-top:clamp(2px,.8vh,10px);
+}
+.numero{
+  position:relative;
+  padding:clamp(10px,1.7vh,18px) clamp(8px,1.1vw,14px);
+  border-radius:12px;
+  cursor:pointer;
+  background:linear-gradient(168deg,rgba(255,253,244,.9),rgba(250,238,214,.55));
+  box-shadow:0 6px 16px rgba(140,95,40,.12),0 0 0 1px rgba(200,160,95,.28) inset;
+  transition:transform .35s cubic-bezier(.34,1.4,.5,1),box-shadow .35s ease,background .35s ease;
+}
+.numero:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(140,95,40,.2),0 0 0 1px rgba(200,160,95,.5) inset;}
+.numero:active{transform:translateY(0) scale(.97);}
+.numero b{
+  display:block;
+  font-family:var(--font-serif);
+  font-size:clamp(21px,2.9vw,38px);
+  font-weight:400;
+  line-height:1.05;
+  background-image:url("assets/ouro.png"),linear-gradient(166deg,#8a6320,#e8c476 24%,#fff8e2 46%,#cda45f 68%,#96690f);
+  background-size:130px 130px,200% 100%;
+  background-repeat:repeat,no-repeat;
+  background-blend-mode:overlay;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+.numero i{
+  display:block;
+  margin-top:5px;
+  font-style:normal;
+  font-family:var(--font-kai);
+  font-size:clamp(11px,1.2vw,13.5px);
+  letter-spacing:.1em;
+  color:#7b6047;
+}
+.numero.aceso{background:linear-gradient(168deg,#fff9e6,#f6e3b8);box-shadow:0 10px 26px rgba(180,130,50,.32),0 0 0 1px rgba(215,175,105,.75) inset;}
+
+/* ---------- 10 · 抽一支签 ---------- */
+.folha.qian{align-items:center;text-align:center;gap:clamp(6px,1.4vh,14px);}
+.qian-palco{
+  position:relative;
+  width:min(430px,84%);
+  min-height:clamp(118px,20vh,168px);
+  display:grid;
+  place-items:center;
+  padding:clamp(14px,2.4vh,24px) clamp(16px,2.6vw,30px);
+  border-radius:14px;
+  background:linear-gradient(170deg,#fffdf4,#f9edd4);
+  box-shadow:0 10px 26px rgba(130,88,36,.18),0 0 0 1px rgba(200,160,95,.45) inset;
+  overflow:hidden;
+}
+.qian-palco::before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border-radius:9px;
+  border:1px solid rgba(200,160,95,.35);
+  pointer-events:none;
+}
+.qian-texto{
+  margin:0;
+  font-family:var(--font-hand);
+  font-size:clamp(20px,2.9vw,34px);
+  line-height:1.5;
+  letter-spacing:.06em;
+  color:#7c4a12;
+  text-shadow:0 1px 0 rgba(255,255,255,.85);
+  transition:opacity .4s ease,transform .5s cubic-bezier(.22,1,.36,1);
+}
+.qian-texto.troca{opacity:0;transform:translateY(14px) scale(.94);}
+.qian-texto.novo{animation:qian-entra .7s cubic-bezier(.22,1,.36,1);}
+@keyframes qian-entra{
+  0%{opacity:0;transform:translateY(-26px) rotate(-4deg) scale(.9);}
+  60%{opacity:1;}
+  100%{opacity:1;transform:none;}
+}
+.qian-conta{
+  font-family:var(--font-kai);
+  font-size:clamp(11px,1.2vw,13px);
+  letter-spacing:.16em;
+  color:rgba(150,110,70,.7);
+}
+.qian-btn{
+  padding:10px 30px;
+  border-radius:999px;
+  font-family:var(--font-kai);
+  font-size:clamp(13px,1.5vw,16px);
+  letter-spacing:.34em;
+  text-indent:.34em;
+  color:#5e3c0d;
+  border:1px solid rgba(190,145,70,.6);
+  background:linear-gradient(160deg,#fffaea,#f3e0b4);
+  box-shadow:0 6px 16px rgba(150,105,40,.2),0 0 0 1px rgba(255,255,255,.7) inset;
+  cursor:pointer;
+  transition:transform .25s ease,box-shadow .25s ease,background .25s ease;
+}
+.qian-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(150,105,40,.3),0 0 0 1px rgba(255,255,255,.8) inset;}
+.qian-btn:active{transform:translateY(0) scale(.98);}
+
+/* ---------- 11 · 十二个月 ---------- */
+.folha.meses{align-items:center;text-align:center;gap:clamp(5px,1.1vh,11px);}
+.meses-grade{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(6px,1vw,12px);
+  width:100%;
+  max-width:620px;
+}
+.mes{
+  padding:clamp(7px,1.2vh,12px) 4px;
+  border-radius:10px;
+  cursor:pointer;
+  font-family:var(--font-kai);
+  font-size:clamp(11px,1.25vw,14px);
+  letter-spacing:.08em;
+  color:#7b6047;
+  border:1px solid rgba(200,160,95,.32);
+  background:linear-gradient(168deg,rgba(255,253,244,.85),rgba(250,238,214,.5));
+  transition:transform .3s cubic-bezier(.34,1.4,.5,1),background .35s ease,color .35s ease,box-shadow .35s ease;
+}
+.mes:hover{transform:translateY(-2px);}
+.mes.aceso{
+  color:#5e3c0d;
+  background:linear-gradient(168deg,#fff8e2,#f2dcae);
+  box-shadow:0 8px 18px rgba(180,130,50,.3),0 0 0 1px rgba(215,175,105,.7) inset;
+  transform:translateY(-1px);
+}
+.mes b{display:block;font-weight:400;font-size:clamp(13px,1.5vw,17px);font-family:var(--font-serif);letter-spacing:.06em;}
+.mes span{display:block;margin-top:3px;font-size:em;font-size:clamp(9.5px,1.05vw,11.5px);color:rgba(123,96,71,.85);}
+.mes.aceso span{color:#6b470f;}
+.mes-ano{
+  margin:clamp(4px,1vh,12px) 0 0;
+  font-family:var(--font-kai);
+  font-size:clamp(11.5px,1.3vw,14px);
+  letter-spacing:.14em;
+  color:rgba(150,110,70,.72);
+  min-height:1.6em;
+}
+
+/* ---------- 12 · 时间胶囊 ---------- */
+.folha.capsulas{align-items:center;text-align:center;gap:clamp(6px,1.4vh,14px);}
+.capsulas-grade{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(10px,1.8vw,22px);
+  width:100%;
+  max-width:600px;
+}
+.capsula{
+  position:relative;
+  min-height:clamp(96px,17vh,132px);
+  border-radius:12px;
+  cursor:pointer;
+  perspective:800px;
+  text-align:center;
+}
+.capsula-cara{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  border-radius:12px;
+  padding:10px;
+  background:linear-gradient(168deg,#fffdf4,#f7ead0);
+  box-shadow:0 8px 20px rgba(130,88,36,.16),0 0 0 1px rgba(200,160,95,.42) inset;
+  transition:transform .8s cubic-bezier(.22,1,.36,1),opacity .5s ease;
+  backface-visibility:hidden;
+}
+.capsula-ano{
+  font-family:var(--font-serif);
+  font-size:clamp(15px,1.9vw,22px);
+  letter-spacing:.12em;
+  color:#8a6a3c;
+}
+.capsula-selo{
+  width:clamp(30px,3.6vw,42px);
+  height:clamp(30px,3.6vw,42px);
+  background-image:url("assets/selo-ouro.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  filter:drop-shadow(0 3px 6px rgba(90,50,10,.35));
+}
+.capsula-dica{
+  font-family:var(--font-kai);
+  font-size:clamp(10px,1.1vw,12px);
+  letter-spacing:.14em;
+  color:rgba(150,110,70,.65);
+}
+.capsula-txt{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 16px;
+  border-radius:12px;
+  font-family:var(--font-hand);
+  font-size:clamp(14px,1.75vw,20px);
+  line-height:1.6;
+  color:#7c4a12;
+  background:linear-gradient(168deg,#fff8e2,#f4e0b6);
+  box-shadow:0 8px 22px rgba(160,110,40,.24),0 0 0 1px rgba(215,175,105,.6) inset;
+  transform:rotateY(90deg);
+  opacity:0;
+  transition:transform .8s cubic-bezier(.22,1,.36,1),opacity .45s ease;
+  backface-visibility:hidden;
+}
+.capsula.aberta .capsula-cara{transform:rotateY(-90deg);opacity:0;}
+.capsula.aberta .capsula-txt{transform:rotateY(0);opacity:1;}
+
+/* ---------- 页码点多了，允许换行 ---------- */
+.pontos{flex-wrap:wrap;justify-content:center;max-width:min(560px,86vw);row-gap:7px;}
+
+@media (max-width:820px){
+  .numeros-grade{grid-template-columns:repeat(2,minmax(0,1fr));max-width:96%;}
+  .meses-grade{grid-template-columns:repeat(3,minmax(0,1fr));max-width:96%;}
+  .capsulas-grade{grid-template-columns:1fr;gap:10px;max-width:94%;}
+  .capsula{min-height:78px;}
+  .qian-palco{width:92%;}
+}
+
+
+/* =========================================================
+   点击热区加大：手指也好点
+   ========================================================= */
+.qian-palco{cursor:pointer;min-height:clamp(150px,25vh,210px);}
+.qian-palco:hover{box-shadow:0 14px 30px rgba(130,88,36,.24),0 0 0 1px rgba(200,160,95,.6) inset;}
+.qian-btn{min-height:50px;padding:14px 42px;font-size:clamp(15px,1.7vw,18px);}
+.qian-texto{padding:6px 2px;}
+
+.mes{min-height:58px;padding:11px 4px;font-size:clamp(12px,1.35vw,15px);}
+.mes b{font-size:clamp(14px,1.6vw,18px);}
+.mes span{font-size:clamp(10px,1.15vw,12.5px);}
+.meses-grade{gap:clamp(8px,1.2vw,14px);}
+
+.numero{min-height:108px;padding:clamp(12px,2vh,20px) clamp(10px,1.3vw,16px);}
+
+.capsula{min-height:clamp(112px,19vh,150px);}
+
+/* 页码点：视觉不变，热区扩大一圈 */
+.ponto{position:relative;}
+.ponto::after{content:"";position:absolute;inset:-10px;border-radius:50%;}
+
+/* 左右翻页箭头 */
+.nav-seta{min-width:54px;min-height:54px;}
+
+/* 第 4 / 5 页的卡片与条目 */
+.desejo{min-height:clamp(74px,12vh,104px);}
+.tempo{min-height:clamp(46px,7vh,64px);}
+
+/* 信封上的蜡封、封面头像：热区也放大一点 */
+.sobre-selo{cursor:pointer;}
+
+@media (max-width:820px){
+  .mes{min-height:62px;}
+  .numero{min-height:96px;}
+  .capsula{min-height:96px;}
+  .qian-btn{min-height:52px;padding:14px 34px;}
+}
+
+
+/* =========================================================
+   登录页：政务 / 比赛官网画风
+   ========================================================= */
+body.trancado{overflow:hidden;background:#eef1f5;}
+body.trancado #container{opacity:0;pointer-events:none;transition:opacity .8s ease;}
+body:not(.trancado) #container{opacity:1;transition:opacity 1.5s ease .2s;}
+body.trancado #fx,
+body.trancado #fxGlow,
+body.trancado .veu,
+body.trancado .cena-flash{opacity:0;}
+body:not(.trancado) #fx,
+body:not(.trancado) #fxGlow,
+body:not(.trancado) .veu{opacity:1;transition:opacity 1.4s ease .3s;}
+
+.portao{
+  position:fixed;
+  inset:0;
+  z-index:60;
+  overflow:auto;
+  background:#eef1f5;
+  color:#22303f;
+  font-family:"Microsoft YaHei","PingFang SC",-apple-system,"Segoe UI",Roboto,sans-serif;
+  transition:opacity .7s ease,visibility 0s linear .7s;
+}
+.portao.ok{opacity:0;visibility:hidden;pointer-events:none;}
+
+.gw{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  background:#eef1f5;
+}
+
+/* 顶栏 */
+.gw-topo{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 clamp(16px,4vw,56px);
+  min-height:74px;
+  background:linear-gradient(180deg,#1c3f74,#173463);
+  color:#fff;
+  box-shadow:0 2px 10px rgba(16,40,80,.25);
+}
+.gw-marca{
+  flex:0 0 auto;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#f7d99a,#c99a3c 52%,#8f6a1f);
+  display:grid;
+  place-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+.gw-marca i{
+  width:16px;
+  height:16px;
+  border:2.5px solid rgba(255,255,255,.9);
+  border-radius:3px;
+  display:block;
+}
+.gw-nomes{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.gw-nomes strong{font-size:clamp(15px,1.7vw,19px);font-weight:600;letter-spacing:.06em;white-space:nowrap;}
+.gw-nomes span{font-size:10.5px;letter-spacing:.04em;color:rgba(255,255,255,.62);white-space:nowrap;}
+.gw-nav{margin-left:auto;display:flex;gap:clamp(8px,1.6vw,26px);}
+.gw-nav a{
+  font-size:13.5px;
+  color:rgba(255,255,255,.88);
+  text-decoration:none;
+  padding:6px 2px;
+  border-bottom:2px solid transparent;
+  transition:color .2s ease,border-color .2s ease;
+}
+.gw-nav a:hover{color:#fff;border-bottom-color:#f0cf8e;}
+
+/* 中间 */
+.gw-meio{
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(18px,3vw,48px);
+  padding:clamp(22px,5vh,56px) clamp(16px,4vw,56px);
+  flex-wrap:wrap;
+}
+.gw-caixa{
+  width:min(420px,94vw);
+  background:#fff;
+  border:1px solid #d6dde6;
+  border-radius:6px;
+  box-shadow:0 8px 26px rgba(24,52,99,.09);
+  overflow:hidden;
+}
+.gw-abas{
+  display:flex;
+  border-bottom:1px solid #e4e9f0;
+  background:#f7f9fc;
+}
+.gw-abas span{
+  flex:1 1 0;
+  text-align:center;
+  padding:14px 8px;
+  font-size:13.5px;
+  color:#7c8798;
+  letter-spacing:.08em;
+  border-bottom:2px solid transparent;
+}
+.gw-abas span.ativo{
+  color:#1c3f74;
+  font-weight:600;
+  background:#fff;
+  border-bottom-color:#1c3f74;
+}
+.gw-form{padding:clamp(18px,3.4vh,30px) clamp(18px,3vw,32px) clamp(20px,3.6vh,32px);}
+.gw-linha{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+}
+.gw-linha label{
+  flex:0 0 62px;
+  font-size:13.5px;
+  color:#48566a;
+  letter-spacing:.06em;
+  white-space:nowrap;
+}
+.gw-linha input{
+  flex:1 1 auto;
+  min-width:0;
+  box-sizing:border-box;
+  height:42px;
+  padding:0 12px;
+  border:1px solid #cfd8e3;
+  border-radius:4px;
+  background:#fff;
+  font-family:inherit;
+  font-size:14px;
+  color:#22303f;
+  outline:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.gw-linha input::placeholder{color:#a7b1bf;}
+.gw-linha input:focus{border-color:#1c3f74;box-shadow:0 0 0 3px rgba(28,63,116,.1);}
+.gw-code{
+  flex:0 0 auto;
+  width:88px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid #cfd8e3;
+  border-radius:4px;
+  background:linear-gradient(115deg,#f5f7fa,#e6ecf4);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:19px;
+  letter-spacing:.24em;
+  text-indent:.24em;
+  color:#33507c;
+  font-style:italic;
+  user-select:none;
+}
+.gw-extra{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:2px 0 20px;
+  font-size:12.5px;
+  color:#6b7787;
+}
+.gw-extra label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;}
+.gw-extra a{color:#1c3f74;text-decoration:none;}
+.gw-extra a:hover{text-decoration:underline;}
+.gw-btn{
+  display:block;
+  width:100%;
+  height:46px;
+  border:0;
+  border-radius:4px;
+  background:linear-gradient(180deg,#2a5da8,#1c3f74);
+  color:#fff;
+  font-family:inherit;
+  font-size:15.5px;
+  letter-spacing:.3em;
+  text-indent:.3em;
+  cursor:pointer;
+  box-shadow:0 2px 0 #12294c;
+  transition:filter .18s ease,transform .12s ease;
+}
+.gw-btn:hover{filter:brightness(1.08);}
+.gw-btn:active{transform:translateY(1px);box-shadow:0 1px 0 #12294c;}
+.gw-erro{
+  margin:14px 0 0;
+  min-height:1.2em;
+  font-size:12.5px;
+  color:#c0392b;
+  text-align:center;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.gw-erro.mostra{opacity:1;}
+.gw-caixa.erro{animation:gw-treme .4s cubic-bezier(.36,.07,.19,.97);}
+@keyframes gw-treme{
+  20%,60%{transform:translateX(-5px);}
+  40%,80%{transform:translateX(5px);}
+}
+.gw-aviso{
+  width:min(300px,92vw);
+  padding:20px 22px;
+  background:#fff;
+  border:1px solid #d6dde6;
+  border-radius:6px;
+  font-size:12.5px;
+  line-height:2;
+  color:#5c6a7c;
+}
+.gw-aviso-t{
+  margin:0 0 8px;
+  padding-bottom:8px;
+  border-bottom:1px dashed #dde3ec;
+  font-size:13.5px;
+  font-weight:600;
+  color:#1c3f74;
+  letter-spacing:.1em;
+}
+.gw-aviso p{margin:0;}
+
+/* 页脚 */
+.gw-pe{
+  padding:16px clamp(16px,4vw,56px) 22px;
+  border-top:1px solid #dfe5ee;
+  background:#e7ebf1;
+  text-align:center;
+  font-size:11.5px;
+  line-height:1.9;
+  color:#7b8798;
+}
+.gw-pe p{margin:0;}
+
+@media (max-width:860px){
+  .gw-nav{display:none;}
+  .gw-aviso{display:none;}
+  .gw-meio{padding:20px 14px 26px;}
+  .gw-caixa{width:94vw;}
+  .gw-linha{flex-wrap:wrap;}
+  .gw-linha label{flex:0 0 100%;}
+}
+
+/* =========================================================
+   登录后的过渡：信封飘落 → 落到中间 → 打开
+   ========================================================= */
+.passagem{
+  position:fixed;
+  inset:0;
+  z-index:59;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(120% 100% at 50% 40%,#f3efe6,#d9d2c6 70%,#c9c1b3);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  overflow:hidden;
+  transition:opacity .9s ease,visibility 0s linear .9s;
+}
+.passagem.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .8s ease,visibility 0s;}
+.passagem.fim{opacity:0;visibility:hidden;transition:opacity 1.3s ease,visibility 0s linear 1.3s;}
+
+/* 飘落的小信封 */
+.passagem-cartas{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.pc-mini{
+  position:absolute;
+  top:-60px;
+  width:46px;
+  height:32px;
+  border-radius:3px;
+  background:linear-gradient(168deg,#fffdf6,#f0e6d2);
+  box-shadow:0 4px 10px rgba(120,100,70,.22),0 0 0 1px rgba(190,170,130,.5) inset;
+  opacity:0;
+  animation:pc-cai linear forwards;
+}
+.pc-mini::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:3px;
+  background:linear-gradient(180deg,rgba(190,170,130,.42),rgba(190,170,130,0) 62%);
+  clip-path:polygon(0 0,50% 58%,100% 0);
+}
+@keyframes pc-cai{
+  0%{opacity:0;transform:translateY(-40px) rotate(-14deg);}
+  12%{opacity:.9;}
+  100%{opacity:0;transform:translateY(112vh) rotate(22deg);}
+}
+
+/* 中间那个大信封 */
+.passagem-carta{
+  position:relative;
+  width:clamp(180px,26vw,260px);
+  height:clamp(120px,17vw,172px);
+  opacity:0;
+  transform:translateY(-46vh) rotate(-8deg) scale(.9);
+  animation:pc-chega 1.5s cubic-bezier(.22,1.1,.36,1) .25s forwards;
+  perspective:800px;
+}
+@keyframes pc-chega{
+  0%{opacity:0;transform:translateY(-46vh) rotate(-10deg) scale(.9);}
+  60%{opacity:1;}
+  78%{transform:translateY(8px) rotate(2deg) scale(1.02);}
+  100%{opacity:1;transform:translateY(0) rotate(0) scale(1);}
+}
+.pc-corpo{
+  position:absolute;
+  inset:0;
+  border-radius:6px;
+  background:linear-gradient(168deg,#fffdf7,#f3e9d6);
+  box-shadow:0 18px 40px rgba(110,90,60,.3),0 0 0 1px rgba(190,170,130,.55) inset;
+}
+.pc-corpo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:6px;
+  background:
+    linear-gradient(200deg,rgba(190,170,130,.34) 0 1px,transparent 1px 100%),
+    linear-gradient(160deg,rgba(190,170,130,.34) 0 1px,transparent 1px 100%);
+  clip-path:polygon(0 100%,50% 42%,100% 100%);
+}
+.pc-aba{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:58%;
+  border-radius:6px 6px 0 0;
+  background:linear-gradient(180deg,#fdf7ea,#efe3cd);
+  box-shadow:0 1px 0 rgba(190,170,130,.6) inset;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:50% 0;
+  transform:rotateX(0deg);
+  transition:transform 1s cubic-bezier(.22,1,.36,1);
+  z-index:2;
+}
+.passagem-carta.aberta .pc-aba{transform:rotateX(-168deg);}
+.pc-selo{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:clamp(30px,4vw,42px);
+  height:clamp(30px,4vw,42px);
+  transform:translate(-50%,-50%);
+  background-image:url("assets/selo-ouro.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  filter:drop-shadow(0 3px 6px rgba(90,50,10,.4));
+  z-index:3;
+  transition:opacity .5s ease,transform .6s ease;
+}
+.passagem-carta.aberta .pc-selo{opacity:0;transform:translate(-50%,-50%) scale(.6) rotate(40deg);}
+.pc-luz{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:20px;
+  height:20px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,246,214,.95),rgba(255,214,150,.5) 40%,rgba(255,200,120,0) 70%);
+  opacity:0;
+  z-index:1;
+}
+.passagem-carta.aberta .pc-luz{animation:pc-luz 1.6s ease-out forwards;}
+@keyframes pc-luz{
+  0%{opacity:0;width:20px;height:20px;}
+  35%{opacity:1;}
+  100%{opacity:0;width:min(120vw,1400px);height:min(120vw,1400px);}
+}
+
+.passagem-txt{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:clamp(70px,16vh,140px);
+  margin:0;
+  text-align:center;
+  font-family:var(--font-cn);
+  font-size:clamp(13px,1.6vw,16px);
+  letter-spacing:.34em;
+  text-indent:.34em;
+  color:#8b8172;
+  min-height:1.6em;
+  transition:opacity .5s ease,color .5s ease;
+}
+.passagem-txt.forte{color:#4d4536;}
+.passagem-barra{
+  position:absolute;
+  left:50%;
+  bottom:clamp(46px,11vh,100px);
+  transform:translateX(-50%);
+  width:min(220px,52vw);
+  height:2px;
+  border-radius:2px;
+  background:rgba(90,80,60,.16);
+  overflow:hidden;
+}
+.passagem-barra i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#b3a68c,#5f5747);
+  transition:width .6s ease;
+}
+@media (prefers-reduced-motion:reduce){
+  .gw-caixa.erro,.pc-mini,.passagem-carta{animation:none;opacity:1;transform:none;}
+}
+
+
+/* =========================================================
+   双击信纸：翻到背面 + 一点可点的提示
+   ========================================================= */
+@keyframes folha-vira{
+  0%{transform:perspective(1400px) rotateX(0deg);}
+  42%{transform:perspective(1400px) rotateX(-88deg);}
+  58%{transform:perspective(1400px) rotateX(-92deg);}
+  100%{transform:perspective(1400px) rotateX(0deg);}
+}
+.folha.vira-verso{
+  animation:folha-vira 1.9s cubic-bezier(.45,0,.55,1);
+  backface-visibility:hidden;
+}
+
+.verso-dica{
+  position:fixed;
+  left:50%;
+  top:50%;
+  z-index:30;
+  margin:0;
+  max-width:min(560px,86vw);
+  padding:clamp(18px,3vh,28px) clamp(22px,4vw,40px);
+  border-radius:16px;
+  text-align:center;
+  font-family:var(--font-hand);
+  font-size:clamp(19px,2.6vw,30px);
+  line-height:1.6;
+  letter-spacing:.04em;
+  color:#7c4a12;
+  background:linear-gradient(168deg,#fffdf3,#f7e9cf);
+  box-shadow:0 22px 54px rgba(70,40,16,.42),0 0 0 1px rgba(200,160,95,.55) inset;
+  opacity:0;
+  pointer-events:none;
+  transform:translate(-50%,-50%) scale(.92);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1);
+}
+.verso-dica.mostra{opacity:1;transform:translate(-50%,-50%) scale(1);}
+
+/* 可点的提示：会动的小箭头 / 呼吸的按钮 */
+.capsula-dica{position:relative;padding-bottom:14px;}
+.capsula-dica::after{
+  content:"▾";
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  font-size:12px;
+  color:rgba(150,110,70,.8);
+  animation:dica-bate 1.5s ease-in-out infinite;
+}
+@keyframes dica-bate{
+  0%,100%{transform:translateX(-50%) translateY(0);opacity:.55;}
+  50%{transform:translateX(-50%) translateY(3px);opacity:1;}
+}
+.qian-btn{animation:dica-pulsa 2.6s ease-in-out infinite;}
+@keyframes dica-pulsa{
+  0%,100%{box-shadow:0 6px 16px rgba(150,105,40,.2),0 0 0 1px rgba(255,255,255,.7) inset;}
+  50%{box-shadow:0 10px 26px rgba(150,105,40,.34),0 0 0 1px rgba(255,255,255,.85) inset,0 0 26px rgba(255,200,120,.55);}
+}
+.qian-palco::after{
+  content:"轻触此处也可抽";
+  position:absolute;
+  right:12px;
+  bottom:8px;
+  font-family:var(--font-kai);
+  font-size:10.5px;
+  letter-spacing:.14em;
+  color:rgba(150,110,70,.5);
+  pointer-events:none;
+}
+@media (prefers-reduced-motion:reduce){
+  .capsula-dica::after,.qian-btn{animation:none;}
+  .folha.vira-verso{animation:none;}
+}
+
+
+/* =========================================================
+   兜底：一键全开的大按钮 + 自检提示 + 页码点热区修正
+   ========================================================= */
+.acao-linha{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:clamp(4px,1.2vh,12px);
+}
+.acao-btn{
+  min-height:46px;
+  padding:11px 26px;
+  border-radius:999px;
+  font-family:var(--font-kai);
+  font-size:clamp(13px,1.45vw,15.5px);
+  letter-spacing:.24em;
+  text-indent:.24em;
+  color:#5e3c0d;
+  border:1px solid rgba(190,145,70,.62);
+  background:linear-gradient(160deg,#fffaea,#f3e0b4);
+  box-shadow:0 6px 16px rgba(150,105,40,.2),0 0 0 1px rgba(255,255,255,.7) inset;
+  cursor:pointer;
+  transition:transform .22s ease,box-shadow .22s ease,filter .22s ease;
+}
+.acao-btn:hover{transform:translateY(-2px);filter:brightness(1.04);box-shadow:0 12px 26px rgba(150,105,40,.3),0 0 0 1px rgba(255,255,255,.85) inset;}
+.acao-btn:active{transform:translateY(0) scale(.985);}
+.acao-btn:focus-visible{outline:2px solid var(--ouro-2);outline-offset:4px;}
+
+/* 页码点：热区只外扩 6px（之前 10px 会互相压住，点 A 命中 B） */
+.ponto::after{inset:-6px;}
+.pontos{gap:2px;column-gap:6px;}
+
+/* 自检提示条 */
+.aviso{
+  position:fixed;
+  left:50%;
+  bottom:clamp(10px,2vh,20px);
+  transform:translateX(-50%) translateY(14px);
+  z-index:55;
+  max-width:min(620px,92vw);
+  padding:12px 18px;
+  border-radius:12px;
+  font-family:var(--font-kai);
+  font-size:12.5px;
+  line-height:1.7;
+  letter-spacing:.04em;
+  text-align:center;
+  color:#ffe9c4;
+  background:linear-gradient(160deg,rgba(60,24,20,.94),rgba(34,12,14,.96));
+  box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 0 1px rgba(255,190,120,.4) inset;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .4s ease,transform .5s cubic-bezier(.22,1,.36,1);
+}
+.aviso.mostra{opacity:1;transform:translateX(-50%) translateY(0);}
+
+
+/* =========================================================
+   金线植物装饰（Meowa 生成）
+   ========================================================= */
+.botanica{
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  display:block;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
+  opacity:.42;
+  mix-blend-mode:multiply;
+  filter:drop-shadow(0 2px 5px rgba(150,110,50,.16));
+  animation:bot-flutua 7.5s ease-in-out infinite;
+  transform-origin:50% 60%;
+  will-change:transform;
+}
+@keyframes bot-flutua{
+  0%,100%{transform:translateY(0) rotate(var(--rot,0deg));}
+  50%{transform:translateY(-5px) rotate(calc(var(--rot,0deg) + 1.6deg));}
+}
+
+.bot-bl{left:4.5%;bottom:11%;width:clamp(58px,7.4vw,112px);}
+.bot-br{right:4.5%;bottom:11%;width:clamp(58px,7.4vw,112px);}
+.bot-tl{left:5%;top:9%;width:clamp(46px,5.8vw,86px);}
+.bot-tr{right:5.5%;top:9%;width:clamp(46px,5.8vw,86px);}
+
+/* 封面/落款那种单栏页，装饰稍微大一点、挪到边上 */
+.folha.solta .bot-bl{left:6%;bottom:13%;width:clamp(70px,8.6vw,132px);}
+.folha.solta .bot-br{right:6%;bottom:13%;width:clamp(70px,8.6vw,132px);}
+
+/* 左右分栏那页别压到正文 */
+.folha.dividida .bot-br{right:3%;bottom:8%;width:clamp(50px,6vw,90px);}
+.folha.dividida .bot-tl{left:2.5%;top:7%;width:clamp(42px,5vw,74px);}
+.folha.dividida .bot-bl{left:2%;bottom:8%;width:clamp(42px,5vw,74px);}
+.folha.dividida .bot-tr{right:3%;top:7%;width:clamp(42px,5vw,74px);}
+
+@media (max-width:820px){
+  .botanica{opacity:.34;}
+  .bot-bl,.bot-br{width:clamp(46px,13vw,80px);}
+  .bot-tl,.bot-tr{width:clamp(38px,11vw,64px);}
+}
+@media (prefers-reduced-motion:reduce){
+  .botanica{animation:none;transform:rotate(var(--rot,0deg));}
+}
+
+
+/* =========================================================
+   最后一页「写给以后的几个信封」重做：真信封 + 拆信
+   ========================================================= */
+.capsulas-grade{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(10px,1.8vw,22px);
+  width:100%;
+  max-width:640px;
+}
+
+.capsula{
+  position:relative;
+  min-height:clamp(104px,17vh,142px);
+  border:0;
+  padding:0;
+  background:transparent;
+  cursor:pointer;
+  perspective:900px;
+  text-align:center;
+}
+
+/* 信封本体 */
+.capsula-cara{
+  position:absolute;
+  inset:0;
+  display:block;
+  border-radius:7px;
+  padding:0;
+  background:linear-gradient(168deg,#fffdf7,#f3e8d4);
+  box-shadow:
+    0 10px 24px rgba(120,84,34,.18),
+    0 0 0 1px rgba(196,158,96,.5) inset;
+  transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .5s ease,box-shadow .5s ease;
+  overflow:hidden;
+  backface-visibility:hidden;
+}
+/* 信封的斜折线（用两条渐变画 V 字） */
+.capsula-cara::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(200deg,rgba(196,158,96,.32) 0 1px,transparent 1px 100%),
+    linear-gradient(160deg,rgba(196,158,96,.32) 0 1px,transparent 1px 100%);
+  clip-path:polygon(0 100%,50% 44%,100% 100%);
+  opacity:.9;
+}
+/* 上盖 */
+.capsula-cara::after{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:56%;
+  background:linear-gradient(180deg,#fdf8ec,#f0e4cd);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  box-shadow:0 1px 0 rgba(196,158,96,.55) inset;
+  transform-origin:50% 0;
+  transition:transform .8s cubic-bezier(.22,1,.36,1);
+}
+
+.capsula-ano{
+  position:absolute;
+  left:0;
+  right:0;
+  top:clamp(9px,1.6vh,16px);
+  z-index:2;
+  font-family:var(--font-serif);
+  font-size:clamp(15px,1.9vw,21px);
+  letter-spacing:.14em;
+  color:#8a6a3c;
+  transition:opacity .4s ease,transform .5s ease;
+}
+.capsula-selo{
+  position:absolute;
+  left:50%;
+  top:58%;
+  width:clamp(26px,3.2vw,34px);
+  height:clamp(26px,3.2vw,34px);
+  transform:translate(-50%,-50%);
+  background-image:url("assets/selo-ouro.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  filter:drop-shadow(0 3px 6px rgba(90,50,10,.35));
+  z-index:3;
+  transition:opacity .35s ease,transform .5s ease;
+}
+.capsula-dica{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:clamp(7px,1.2vh,12px);
+  z-index:2;
+  font-family:var(--font-kai);
+  font-size:clamp(10px,1.1vw,12px);
+  letter-spacing:.14em;
+  color:rgba(150,110,70,.72);
+  transition:opacity .35s ease;
+}
+
+/* 里面的信纸 */
+.capsula-txt{
+  position:absolute;
+  left:8%;
+  right:8%;
+  top:16%;
+  bottom:12%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 12px;
+  border-radius:5px;
+  font-family:var(--font-hand);
+  font-size:clamp(13px,1.6vw,18px);
+  line-height:1.6;
+  color:#7c4a12;
+  background:linear-gradient(170deg,#fffdf6,#f8ecd2);
+  box-shadow:0 6px 16px rgba(120,84,34,.22),0 0 0 1px rgba(200,162,100,.45) inset;
+  transform:translateY(38%) scale(.94);
+  opacity:0;
+  z-index:4;
+  transition:transform .75s cubic-bezier(.22,1,.36,1) .12s,opacity .5s ease .12s;
+  backface-visibility:hidden;
+}
+
+/* 打开后：盖子翻下去、印章消失、信纸抽出来 */
+.capsula.aberta .capsula-cara{transform:none;opacity:1;}
+.capsula.aberta .capsula-cara::after{transform:rotateX(-176deg);}
+.capsula.aberta .capsula-selo{opacity:0;transform:translate(-50%,-50%) scale(.55) rotate(28deg);}
+.capsula.aberta .capsula-ano{opacity:0;transform:translateY(-6px);}
+.capsula.aberta .capsula-dica{opacity:0;}
+.capsula.aberta .capsula-txt{transform:translateY(0) scale(1);opacity:1;}
+.capsula.aberta .capsula-cara{box-shadow:0 14px 30px rgba(120,84,34,.24),0 0 0 1px rgba(214,175,110,.75) inset;}
+.capsula:hover .capsula-cara{box-shadow:0 16px 34px rgba(120,84,34,.26),0 0 0 1px rgba(214,175,110,.85) inset;}
+.capsula:focus-visible{outline:2px solid var(--ouro-2);outline-offset:5px;border-radius:9px;}
+.capsula:active{transform:scale(.985);}
+
+@media (max-width:820px){
+  .capsulas-grade{grid-template-columns:1fr;max-width:94%;gap:10px;}
+  .capsula{min-height:92px;}
+  .capsula-txt{font-size:13.5px;}
+}
+@media (max-height:780px){
+  .capsula{min-height:clamp(84px,13vh,112px);}
+  .capsula-txt{font-size:clamp(12.5px,1.5vw,16px);padding:8px 10px;}
+}
+
+
+/* =========================================================
+   重建：纸面与暗角的最终形态（反色带那一轮的结果）
+   ========================================================= */
+.folha{
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.5) 0px, rgba(255,255,255,.16) 60px, rgba(255,255,255,0) 140px),
+    linear-gradient(162deg,var(--papel-1) 0%,var(--papel-2) 48%,var(--papel-3) 100%);
+  background-repeat:no-repeat,no-repeat;
+  background-size:auto,auto;
+}
+.pagina::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  pointer-events:none;
+  background-image:url("assets/papel-grao.png"),url("assets/grao.png");
+  background-size:256px 256px,128px 128px;
+  background-repeat:repeat,repeat;
+  mix-blend-mode:normal;
+  opacity:.13;
+}
+.veu{
+  background-image:
+    radial-gradient(120% 90% at 50% 42%, rgba(0,0,0,0) 42%, rgba(4,2,10,.42) 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255,214,150,.06), rgba(255,214,150,0) 60%);
+  background-size:auto,auto;
+  background-repeat:no-repeat,no-repeat;
+}
+
+/* 鍍忕礌椋庡ご鍍忥細澶у儚绱犮€佷笉绯?*/
+.retrato-px{
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:50%;
+  object-fit:cover;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+  transform:translateZ(0);
+}
+/* 最终兜底：纸面颜色写死，不依赖变量与前面的层 */
+.folha{
+  background-color:#fdf6e8;
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.55) 0px, rgba(255,255,255,.18) 64px, rgba(255,255,255,0) 150px),
+    linear-gradient(162deg,#fffdf8 0%,#fdf4e4 48%,#f6e7cd 100%);
+  background-repeat:no-repeat,no-repeat;
+  background-size:auto,auto;
+}
+/* 关键：mix-blend-mode 在透明区域会把噪点自己画成灰块（卡片外圈发灰的原因），改成正常混合 */
+.pagina::before{mix-blend-mode:normal;opacity:.13;}
+/* 信封页：中等高度窗口再收一点，保证「全部拆开」不被页码点挡住 */
+@media (max-height:820px){
+  .capsulas-grade{gap:clamp(8px,1.2vw,14px);max-width:600px;}
+  .capsula{min-height:clamp(84px,14vh,116px);}
+  .capsula-ano{font-size:clamp(13px,1.6vw,18px);top:8px;}
+  .capsula-txt{font-size:clamp(12.5px,1.5vw,16px);padding:8px 10px;}
+  .capsula-selo{width:clamp(22px,2.6vw,30px);height:clamp(22px,2.6vw,30px);}
+}
+/* 矮窗口终极压缩：保证「全部拆开」这类按钮永远不会被裁掉 */
+@media (max-height:790px){
+  .dica-linha{display:none;}
+  .premio{margin-top:0;}
+  .capsulas-grade{max-width:560px;gap:8px;}
+  .capsula{min-height:76px;}
+  .capsula-dica{display:none;}
+  .capsula-ano{top:6px;font-size:14px;}
+  .capsula-txt{font-size:12.5px;padding:6px 9px;top:12%;bottom:8%;}
+  .capsula-selo{width:20px;height:20px;}
+  .acao-btn{min-height:40px;padding:8px 18px;font-size:12.5px;letter-spacing:.18em;}
+  .mes{min-height:42px;padding:6px 3px;}
+  .mes span{font-size:10px;}
+  .numero{min-height:80px;}
+  .numero b{font-size:clamp(17px,2.3vw,26px);}
+  .qian-palco{min-height:clamp(104px,17vh,150px);}
+  .qian-texto{font-size:clamp(17px,2.4vw,26px);}
+}
+@media (max-height:640px){
+  .capsula{min-height:66px;}
+  .capsula-txt{font-size:11.5px;}
+  .numero{min-height:68px;}
+  .mes{min-height:36px;}
+}
