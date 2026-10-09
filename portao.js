@@ -1,6 +1,4 @@
-/* =========================================================
-   登录 → 信封飘落 → 打开 → 序曲
-   ========================================================= */
+
 (function () {
   'use strict';
 
@@ -23,18 +21,21 @@
   var SENHA = String.fromCharCode(99, 121, 102, 110, 98);
 
   /* 锁着的时候，标题和图标也不能露馅 */
-  var tituloReal = document.title;
+    /* The static HTML ships with a neutral title + lock icon.
+     The real title / icon are only swapped in after a successful unlock,
+     so the tab, share preview and view-source never spoil the surprise. */
+  var ICONE_REAL = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='88'>" +
+    String.fromCodePoint(0x1F48C) + "</text></svg>";
+  var TITULO_REAL = String.fromCharCode(0x751F, 0x65E5, 0x5FEB, 0x4E50, 0x20, 0x00B7, 0x20, 0x5173, 0x82B7, 0x7AE5);
   var icon = document.querySelector('link[rel="icon"]');
-  var iconReal = icon ? icon.getAttribute('href') : null;
-  var ICONE_NEUTRO = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231c3f74'/><rect x='30' y='30' width='40' height='40' rx='5' fill='none' stroke='%23ffffff' stroke-width='7'/></svg>";
 
   document.body.classList.add('trancado');
-  document.title = '综合信息服务平台 · 用户登录';
-  if (icon) { icon.setAttribute('href', ICONE_NEUTRO); }
 
   function restauraAba() {
-    document.title = tituloReal;
-    if (icon && iconReal) { icon.setAttribute('href', iconReal); }
+    document.title = TITULO_REAL;
+    if (icon) { icon.setAttribute('href', ICONE_REAL); }
+    var c = document.getElementById('container');
+    if (c) { c.style.visibility = 'visible'; }
   }
 
   var tentativas = 0;
